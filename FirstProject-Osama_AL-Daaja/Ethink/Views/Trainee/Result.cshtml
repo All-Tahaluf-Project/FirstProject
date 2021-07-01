@@ -1,0 +1,147 @@
+﻿@model Ethink.Models.DTO.DTOResultExam
+
+@{
+    ViewBag.Title = "Result";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            
+                            <img src="~/Assets/Courses/@Model.Exam.CourseSections.Course.Image" alt="Admin" class="rounded-circle" width="150" height="150">
+                            <div class="mt-3">
+                                <h4>@Model.Exam.Name</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-12" style="text-align:center">
+                                    <a href="@Url.Action("DetailsMyCourse",new { id = Model.Exam.IdCourseSections})" class="btn btn-danger">
+                                        <i class="far fa-arrow-alt-circle-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Exam.Name
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mark</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.HistorySolutions.Where(a => a.Solutions.IsTrue).Sum(a => a.Questions.Mark) / @Model.Exam.FullMark
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Date : </h6>
+                            </div>
+                            <div class="col-sm-3 text-secondary">
+                                @Model.Exam.StartTime
+                            </div>
+                            <div class="col-sm-3 text-secondary">
+                                =>
+                            </div>
+                            <div class="col-sm-3 text-secondary">
+                                @Model.Exam.EndTime
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Download : </h6>
+                            </div>
+                            <div class="col-sm-9">
+                                <a href="@Url.Action("ResultPDF",new { id = Model.Exam.Id,idApplicationUser = Model.IdApplicationUser})" class="btn btn-outline-success">
+                                    PDF
+                                </a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container py-5">
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4">Result</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <ul class="list-group shadow">
+
+                @foreach (var item in Model.HistorySolutions)
+                {
+                    <li class="list-group-item">
+                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                                <h5 class="mt-0 font-weight-bold mb-2">Question : @item.Questions.Name</h5>
+                                <p class="font-italic text-muted mb-0 small">Solutions : @item.Solutions.Name
+                                    @if (item.Solutions.IsTrue)
+                                    {
+                                        <i class="fas fa-check" style="color: green;"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-times" style="color: red;"></i>
+                                    }
+                                </p>
+                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                    <h6 class="font-weight-bold my-2">@item.Questions.Mark</h6>
+                                </div>
+                            </div><img src="~/Content/Exam/Img/exam.png" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

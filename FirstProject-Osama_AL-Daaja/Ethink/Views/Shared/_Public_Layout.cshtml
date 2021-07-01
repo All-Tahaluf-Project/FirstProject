@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+
+<head>
+
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="~/Content/fontawesome-free-5.15.1-web/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/style.css">
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/Css.css">
+
+
+
+    @*<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/script/_Main_layout_CSS.css" rel="stylesheet" />*@
+</head>
+
+
+<body>
+
+
+
+
+    @*<div id="body" class="container">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>*@
+
+    <!--Footer-->
+
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    <div class="site-navbar-wrap">
+        <div class="site-navbar-top">
+            <div class="container py-3">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="d-flex mr-auto">
+                            <a href="#" class="d-flex align-items-center mr-4">
+                                <span class="icon-envelope mr-2"></span>
+                                <span class="d-none d-md-inline-block">smaj.p.r5@gmai.com</span>
+                            </a>
+                            <a href="#" class="d-flex align-items-center mr-auto">
+                                <span class="icon-phone mr-2"></span>
+                                <span class="d-none d-md-inline-block">0795638279</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right">
+                        <div class="mr-auto">
+                            <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
+                            <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
+                            <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
+                            <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-navbar site-navbar-target js-sticky-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <h1 class="my-0 site-logo">
+                            <a href="@Url.Action("Home","Public")" class="font-weight-bold" style="color: #fff;">
+                                <img style="width: 30px; height: 30px;" src="/Content/Private_Layout/images/graduation-hat.png" /> E Think
+                            </a>
+                        </h1>
+                    </div>
+                    <div class="col-10">
+                        <nav class="site-navigation text-right" role="navigation">
+                            <div class="container">
+                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
+                                <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
+                                    <li class="active"><a href="@Url.Action("Home","Public")" class="nav-link">Home</a></li>
+                                    @*<li><a href="#classes-section" class="nav-link">Classes</a></li>
+                                    <li class="has-children">
+                                        <a href="#" class="nav-link">Pages</a>
+                                        <ul class="dropdown arrow-top">
+                                            <li><a href="#" class="nav-link">Team</a></li>
+                                            <li><a href="#" class="nav-link">Pricing</a></li>
+                                            <li><a href="#" class="nav-link">FAQ</a></li>
+                                            <li class="has-children">
+                                                <a href="#">More Links</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="#">Menu One</a></li>
+                                                    <li><a href="#">Menu Two</a></li>
+                                                    <li><a href="#">Menu Three</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#about-section" class="nav-link">About</a></li>
+                                    <li><a href="#events-section" class="nav-link">Events</a></li>
+                                    <li><a href="#gallery-section" class="nav-link">Gallery</a></li>
+                                    <li><a href="#contact-section" class="nav-link">Contact</a></li>*@
+                                    <li><a href="/Public/LogIn" class="nav-link">LogIn</a></li>
+                                    <li><a href="/Public/RegisterTrainee" class="nav-link">Register</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+
+    <script src="~/Content/Public_Layout/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/Public_Layout/js/popper.min.js"></script>
+    <script src="~/Content/Public_Layout/js/bootstrap.min.js"></script>
+    <script src="~/Content/Public_Layout/js/jquery.sticky.js"></script>
+    <script src="~/Content/Public_Layout/js/main.js"></script>
+
+    @*<script src="~/Content/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>*@
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+
+</html>

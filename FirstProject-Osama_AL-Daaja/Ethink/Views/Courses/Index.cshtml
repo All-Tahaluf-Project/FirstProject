@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Ethink.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/TableCourse/Css.css" />
+
+<div class="container" style="padding: 7em 0;">
+    <div class="row" style="justify-content: center;">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col col-sm-4 col-xs-12">
+                            <h4 class="title">Courses <span>List</span></h4>
+                        </div>
+                        <div class="col-sm-1 col-xs-12 text-right">
+                            <a href="@Url.Action("Create")" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-3 col-xs-12 text-right">
+                            <div class="btn_group">
+                                @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+                                {
+                                    @Html.DropDownList("Id", (SelectList)ViewBag.Categories, "Select Class",new { @class = "form-control" })
+                                    <button type="submit" class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 text-right">
+                            <div class="btn_group">
+                                @using (Html.BeginForm("Index", "Courses", FormMethod.Get))
+                                {
+                                    @Html.Editor("Name", new { htmlAttributes = new {@style = "width : 78%", @type = "text", @class = "form-control", placeholder = "Name" } })
+                                    <button type="submit" class="btn btn-default" title="Reload"><i class="fa fa-sync-alt"></i></button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Price</th>
+                                <th>Edit</th>
+                                <th>Details</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @if (item.Image == "")
+                                                {
+                                                    <img src="~/Content/AdminPage/Image/online-course.png" style="height:70px; width:70px;border-radius: 1pc;" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Assets/Courses/@item.Image" style="height:70px; width:70px;border-radius: 1pc;" />
+                                                }
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @Html.DisplayFor(modelItem => item.Categories.Name)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Edit",new { id = item.Id })" class="btn btn-success">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Details",new { id = item.Id })" class="btn btn-primary">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id },new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

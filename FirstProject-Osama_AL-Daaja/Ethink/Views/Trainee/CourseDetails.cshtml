@@ -1,0 +1,188 @@
+﻿@model Ethink.Models.Course
+
+@{
+    ViewBag.Title = "CourseDetails";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.Image == "")
+                            {
+                                <img src="~/Content/AdminPage/Image/online-course.png" class="rounded-circle"
+                                     style="height: 200px; width: 200px;">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/Courses/@Model.Image" class="rounded-circle" width="150"
+                                     style="height: 200px; width: 200px;">
+                            }
+                            <div class="mt-3">
+                                <h4>@Model.Name</h4>
+                                <p class="text-secondary mb-1">@Model.Categories.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">StartDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.StartDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">EndDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.EndDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Price</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Price $
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    Start Date
+                                </div>
+                                <div class="col-sm-4">
+                                    End Date
+                                </div>
+                                <div class="col-sm-4">
+                                    Value
+                                </div>
+                            </div>
+                            @foreach (var item in Model.DiscountPrice)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        @item.StartDate
+                                    </div>
+                                    <div class="col-sm-4">
+                                        @item.EndDate
+                                    </div>
+                                    <div class="col-sm-4">
+                                        @item.DiscountValue %
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">Number</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">Max Count</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">Trainer</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var item in Model.CourseSections)
+                        {
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @item.Number
+                        </div>
+                        <div class="col-sm-3">
+                            @item.MaxCount
+                        </div>
+                        <div class="col-sm-3">
+                            @item.Employee.ApplicationUser.NickName
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.ActionLink("Enroll", "AddRequest", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-success", onclick = "return confirm('Are You Sure.');" })
+                        </div>
+                    </div>
+                            <hr />
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+

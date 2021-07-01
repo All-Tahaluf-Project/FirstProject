@@ -1,0 +1,333 @@
+﻿@model Ethink.Models.DTO.DTOTraineePage
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+<div id="Up"></div>
+
+
+<style>
+    body {
+        background-color: #e2e8f0;
+    }
+
+    .mt-3 {
+        box-shadow: 0 0 20px 0 rgb(0 0 0);
+        background: #ffc459;
+        box-shadow: 0 0 20px 0 rgb(255 165 1);
+    }
+</style>
+
+<link rel="stylesheet" href="~/Content/Public_Layout/MyCss/Css.css" />
+
+
+<section id="header" class="jumbotron text-center"
+         style="background: url(/Content/Private_Layout/images/pexels-pixabay-256541.jpg) center center / cover no-repeat;">
+    <h1 class="display-3">E Think</h1>
+    <p class="lead">Welcome</p>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="Testimonials"></div>
+
+<div class="bg text-center" style="min-height: 80vh;">
+    <!--Div for Centered Text & Input-->
+    <div class="centered" style="top: 73%;width: 65%; box-shadow: 0 0 20px 0 rgb(0 0 0);">
+        <p class="secondLine">Add Testimonials</p>
+        <p class="secondLine">
+            <img style="width: 100px; height: 100px;" src="/Content/Private_Layout/images/testimonials.png" />
+        </p>
+        @using (Html.BeginForm("AddTestimonial", "Trainee", FormMethod.Get))
+        {
+            @Html.Editor("Text", new { htmlAttributes = new { @style = "width : 78%", @type = "text", @class = "InputStyle", placeholder = "Text" } })
+            <hr />
+            if (ViewBag.StatusTestimonial != "")
+            {
+
+                @ViewBag.StatusTestimonial
+                <hr />
+            }
+            <button style="background-color: #ff7100; " type="submit" class="btn btn-default">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        }
+    </div>
+    <div class="social-btn">
+        <a href="#" title="Facebook"><i class="fa fa-facebook"></i></a> <a href="#" title="Twitter"><i class="fa fa-twitter"></i></a>
+    </div>
+</div>
+
+<hr />
+
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center activity">
+                <div>
+                    @using (Html.BeginForm("Index", "Trainee", FormMethod.Get))
+                    {
+                        @Html.Editor("Name", new { htmlAttributes = new { @style = "width : 100%", @type = "text", @class = "form-control", placeholder = "Name" } })
+                        <button type="submit" class="btn btn-default"><i class="fa fa-sync-alt"></i></button>
+                    }
+                </div>
+                <div><span class="activity-done">Courses</span></div>
+                <div class="icons">
+                    @using (Html.BeginForm("Index", "Trainee", FormMethod.Get))
+                    {
+                        @Html.DropDownList("Id", (SelectList)ViewBag.Categories, "Select Class", new { @class = "form-control" })
+                        <button type="submit" class="btn btn-default" title="Reload"><i class="fa fa-search"></i></button>
+                    }
+                </div>
+            </div>
+            @foreach (var item in Model.Courses)
+            {
+                <div class="mt-3">
+                    <ul class="list list-inline">
+                        <li class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+
+                                <div class="ml-2">
+                                    <h6 class="mb-0">@item.Name</h6>
+                                    <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                        <div><i class="fa fa-calendar-o"></i><span class="ml-2">@item.StartDate =></span></div>
+                                        <hr />
+                                        <div class="ml-3"><i class="fa fa-clock-o"></i><span class="ml-2">@item.EndDate</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @item.Price $
+                                    </div>
+                                    <div class="col-md-4">
+                                        @if (item.DiscountPrice.Any() && item.DiscountPrice.OrderBy(a => a.EndDate).First().EndDate > DateTime.Now)
+                                        {
+                                            <div class="row" style="color:green">
+                                                @item.DiscountPrice.OrderBy(a => a.EndDate).First().EndDate
+                                            </div>
+                                            <div class="row" style="color:green">
+                                                @item.DiscountPrice.OrderBy(a => a.EndDate).First().DiscountValue %
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p>No Discounts</p>
+                                        }
+                                    </div>
+                                    <div class="col-md-4">
+                                        @item.Categories.Name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="d-flex flex-column mr-2">
+                                    <div class="profile-image">
+                                        @if (item.Image == "")
+                                        {
+                                            <img class="rounded-circle" src="~/Content/AdminPage/Image/online-course.png" style="height: 100px; width: 100px;">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" src="~/Assets/Courses/@item.Image" style="height: 100px; width: 100px;">
+                                        }
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("CourseDetails", "Trainee",new { id = item.Id })">
+                                    <i class="fas fa-info-circle btn btn-success"></i>
+                                </a>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<hr />
+
+
+
+
+
+
+
+<footer class="dk-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="dk-footer-box-info" style="top: -30px">
+                    <a href="index.html" class="footer-logo">
+                        <img src="/Content/Private_Layout/images/graduation-hat.png" alt="footer_logo" class="img-fluid" style="height:140px">
+                    </a>
+                    <p class="footer-info-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu porttitor metus. Proin sed velit.
+                    </p>
+                    <div class="footer-social-link">
+                        <h3>Follow us</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-google-plus"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Social link -->
+                </div>
+                <!-- End Footer info -->
+                <div class="footer-awarad">
+
+                </div>
+            </div>
+            <!-- End Col -->
+            <div class="col-md-12 col-lg-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="contact-us">
+                            <div class="contact-icon">
+                                <i class="fa fa-map-o" aria-hidden="true"></i>
+                            </div>
+                            <!-- End contact Icon -->
+                            <div class="contact-info">
+                                <h3>Osama AL-Daaja</h3>
+                                <p>Amman-Marka</p>
+                            </div>
+                            <!-- End Contact Info -->
+                        </div>
+                        <!-- End Contact Us -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-6">
+                        <div class="contact-us contact-us-last">
+                            <div class="contact-icon">
+                                <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
+                            </div>
+                            <!-- End contact Icon -->
+                            <div class="contact-info">
+                                <h3>0795638279</h3>
+                                <p>Give us a call</p>
+                            </div>
+                            <!-- End Contact Info -->
+                        </div>
+                        <!-- End Contact Us -->
+                    </div>
+                    <!-- End Col -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3383.8415544358645!2d35.99802875614526!3d31.992310425575106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151b60d1eb34f38d%3A0x9679ab2743b666c6!2z2K3Zhdiy2KnYjCDYudmF2ZHYp9mG!5e0!3m2!1sar!2sjo!4v1625047586781!5m2!1sar!2sjo"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Widget Row -->
+    </div>
+    <!-- End Contact Container -->
+
+
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span>Copyright © 2021, All Right Reserved Osama AL-Daaja</span>
+                </div>
+                <!-- End Col -->
+                <div class="col-md-6">
+                    <div class="copyright-menu">
+                        <ul>
+                            <li>
+                                <a href="#Testimonials">Testimonials</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End col -->
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Copyright Container -->
+    </div>
+    <!-- End Copyright -->
+    <!-- Back to top -->
+    <div id="back-to-top" class="back-to-top">
+        <a href="#Up" class="btn btn-dark" title="Back to Top" style="display: block;">
+            <i class="fa fa-angle-up"></i>
+        </a>
+    </div>
+    <!-- End Back to top -->
+</footer>
+

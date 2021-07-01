@@ -1,0 +1,65 @@
+﻿@model Ethink.Models.Exam
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Exam</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullMark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullMark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseSections.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseSections.Id)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

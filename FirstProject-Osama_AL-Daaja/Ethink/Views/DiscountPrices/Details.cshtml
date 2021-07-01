@@ -1,0 +1,183 @@
+﻿@model Ethink.Models.DiscountPrice
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>DiscountPrice</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DiscountValue)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiscountValue)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Course.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Course.Name)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.Course.Image == "")
+                            {
+                                <img src="~/Content/AdminPage/Image/online-course.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/Courses/@Model.Course.Image" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            <div class="mt-3">
+                                <h4>@Model.Course.Name</h4>
+                                <p class="text-secondary mb-1">@Model.Course.Price $</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">StartDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.StartDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">EndDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.EndDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Value</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.DiscountValue
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("Edit",new { id = Model.Id })" class="btn btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("Details","Courses",new { id = Model.IdCourse})" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

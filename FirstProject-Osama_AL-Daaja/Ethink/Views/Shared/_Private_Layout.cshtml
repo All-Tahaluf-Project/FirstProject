@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+
+<head>
+
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="~/Content/Public_Layout/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/Public_Layout/js/jquery.sticky.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Public_Layout/css/style.css">
+    <link rel="stylesheet" href="~/Content/SweetAlert/SweetAlert.css">
+
+    <link rel="stylesheet" href="~/Content/fontawesome-free-5.15.1-web/css/all.min.css" />
+
+    <style>
+        .text-Color {
+            color: #000;
+        
+    </style>
+</head>
+
+<body style="background-color: #202020;">
+
+    <div style=" background: orange;" class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span style="color:#000" class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar site-navbar-target py-4" role="banner" style="background: #ffa500;">
+
+        <div class="container">
+            <div class="row align-items-center position-relative">
+
+                <div class="col-3">
+                    <div class="site-logo">
+                        <a href="@Url.Action("RedirectToMyPage","Public")" class="font-weight-bold" style="color:#000">
+                            <img style="width: 30px; height: 30px;" src="/Content/Private_Layout/images/graduation-hat.png" /> E Think
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-9  text-right">
+
+
+                    <span class="d-inline-block d-lg-block">
+                    <a class="text-black site-menu-toggle js-menu-toggle py-5">
+                        <span class="icon-menu h3 text-Color"></span>
+                    </a>
+                    </span>
+
+
+
+                    <nav class="site-navigation text-right ml-auto d-none d-lg-none" role="navigation">
+                        <ul class="site-menu main-menu js-clone-nav ml-auto ">
+
+                            <li style="text-align: center;">
+                                @if (Session["ImageName"] == "" || Session["ImageName"] == null)
+                                {
+                                    <img style="width: 100px; height: 100px;" src="/Content/Private_Layout/images/graduation-hat.png" />
+                                }
+                                else
+                                {
+                                    <img style="width: 100px; height: 100px;" src="~/Assets/Users/@Session["ImageName"]" />
+                                }
+                            </li>
+
+                            <li class="active">
+                                <a href="@Url.Action("RedirectToMyPage","Public")">
+                                    <i class="fas fa-home"></i> Home
+                                </a>
+                            </li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a href="/Courses/Index" class="nav-link"><i class="fas fa-university"></i> Courses List</a></li>
+                                <li><a href="/Categories/Index" class="nav-link"><i class="fas fa-ethernet"></i> Categories List</a></li>
+                                <li><a href="/Trainers/Index" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> Trainers List</a></li>
+                                <li><a href="/Accountants/Index" class="nav-link"><i class="fas fa-file-invoice-dollar"></i> Accountants List</a></li>
+                                <li><a href="/Admin/ContactUsList" class="nav-link"><i class="fas fa-paper-plane"></i> Contact Us List</a></li>
+                                <li><a href="/Admin/TestimonialList" class="nav-link"><i class="fas fa-envelope-open-text"></i> Testimonials</a></li>
+                            }
+
+                            @if (User.IsInRole("Trainer"))
+                            {
+                                <li><a href="/Trainer/IndexCourses" class="nav-link"><i class="fas fa-university"></i>Courses List</a></li>
+                            }
+
+
+                            @if (User.IsInRole("Trainee"))
+                            {
+                                <li><a href="/Trainee/ListMyCourse" class="nav-link"><i class="fas fa-chalkboard-teacher"></i> My Courses</a></li>
+                                <li><a href="/PayCards/Index" class="nav-link"><i class="fas fa-credit-card"></i> Cards List</a></li>
+                                <li><a href="/Trainee/ListRequestRegister" class="nav-link"><i class="fas fa-chalkboard"></i> My Requests</a></li>
+                            }
+
+
+                            @if (User.IsInRole("Accountant"))
+                            {
+                                <li><a href="/Accountant/ProblemPayments" class="nav-link"><i class="fas fa-times"></i> List bad Payments</a></li>
+                                <li><a href="/Accountant/ListOfTrainee" class="nav-link"><i class="fas fa-user-graduate"></i> List Trainees</a></li>
+                                <li><a href="/Accountant/EmployeeList" class="nav-link"><i class="fas fa-users"></i> List Employees</a></li>
+                            }
+
+                            <li><a href="/Private/EditMyProfile" class="nav-link"><i class="fas fa-user-edit"></i> Edit My Profile</a></li>
+
+                            <li>
+                                <a href="@Url.Action("LogOut","Public")">
+                                    <i class="fas fa-sign-out-alt"></i> Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+
+            </div>
+        </div>
+
+    </header>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+
+
+
+
+
+    <script src="~/Content/Public_Layout/js/popper.min.js"></script>
+    <script src="~/Content/Public_Layout/js/bootstrap.min.js"></script>
+    <script src="~/Content/Public_Layout/js/main.js"></script>
+    <script src="~/Content/SweetAlert/SweetAlert.js"></script>
+
+
+</body>
+
+
+
+</html>

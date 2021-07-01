@@ -1,0 +1,526 @@
+﻿@model Ethink.Models.DTO.DTOCourseSection
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.Course.Course.Image == "")
+                            {
+                                <img src="~/Content/AdminPage/Image/online-course.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/Courses/@Model.Course.Course.Image" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                        <div class="mt-3">
+                            <h4>@Model.Course.Course.Name</h4>
+                            <p class="text-secondary mb-1">@Model.Course.Course.Price $</p>
+                            <hr />
+                            <a href="@Url.Action("IndexCourses")" class="btn btn-info">
+                                Back
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Number Of Section</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.Number
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Max Count Of Trainee</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.MaxCount
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Name Trainer</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.Employee.ApplicationUser.NickName
+                            </div>
+                        </div>
+                        <hr>
+                        @if (Model.Course.Exam.Any())
+                        {
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Average (All Exams)</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.Exam.Average(e => e.TraineeExam.Sum(t => t.Mark)) Of @Model.Course.Exam.Sum(a => a.FullMark)
+                            </div>
+                        </div>
+                        <hr>
+                        }
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <button type="button" onclick="ShowMaterial()" class="btn btn-primary btn-lg btn-block">Materials</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" onclick="ShowExam()" class="btn btn-primary btn-lg btn-block">Exams</button>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" onclick="ShowTrainee()" class="btn btn-primary btn-lg btn-block">Trainees</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gutters-sm" id="Material" style="display:none">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        @using (Html.BeginForm("CreateMaterial", "Trainer", new { id = Model.Course.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="row">
+
+                                @Html.AntiForgeryToken()
+                                <div class="col-sm-7">
+                                    <input type="file" name="File" id="Upload" onchange="CheckImage()" />
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="submit" class="btn-block btn-primary">Upload</button>
+                                </div>
+
+                            </div>
+                        }
+
+                        <br />
+                        <hr />
+                        <br />
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Video</h6>
+                            </div>
+                            <div class="col-sm-7 text-secondary">
+                                Name
+                            </div>
+                            <div class="col-sm-2">
+                                Delete
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var item in Model.MaterialsVideo)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">@item.Name</h6>
+                                </div>
+                                <div class="col-sm-7 text-secondary">
+                                    <video style=" height: 300px; width: 450px;" controls>
+                                        <source src="~/Assets/Courses/Materials/@item.Name" />
+                                    </video>
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ActionLink("Delete", "DeleteMaterial", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                </div>
+                            </div>
+                            <hr>
+                        }
+                        <br />
+                        <hr />
+                        <br />
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Document</h6>
+                            </div>
+                            <div class="col-sm-7 text-secondary">
+                                Name
+                            </div>
+                            <div class="col-sm-2 text-secondary">
+                                Delete
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var item in Model.MaterialsDoc)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">
+                                        @Html.ActionLink("DownloadFile", "DownloadFile", new { Name = item.Name })
+                                    </h6>
+                                </div>
+                                <div class="col-sm-7 text-secondary">
+                                    @item.Name
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ActionLink("Delete", "DeleteMaterial", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                </div>
+                            </div>
+                            <hr>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gutters-sm" id="Exam" style="display:none">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="@Url.Action("CreateExam",new { id = Model.Course.Id})" class="btn btn-success btn-lg btn-block">
+                                    <i class="far fa-plus-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <hr>
+                        @if (!Model.Exam.Any())
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block">Empty</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            @foreach (var item in Model.Exam)
+            {
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Name</h6>
+                        </div>
+                        <div class="col-sm-7 text-secondary">
+                            @item.Name
+                        </div>
+                        <div class="col-sm-2">
+                            @if (item.StartTime <= DateTime.Now && item.EndTime >= DateTime.Now && item.FullMark <= item.Questions.Sum(a => a.Mark))
+                            {
+                                <i class="fas fa-check" style="color: green;"></i>
+                            }
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Date</h6>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            @item.StartTime
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            =>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            @item.EndTime
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Full Mark</h6>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            @item.Questions.Sum(a => a.Mark) / @item.FullMark
+                            @if (item.FullMark > item.Questions.Sum(a => a.Mark))
+                            {
+                                <i class="fas fa-exclamation-triangle"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-check-circle"></i>
+                            }
+                        </div>
+                        @if (item.TraineeExam.Any())
+                        {
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Average</h6>
+                        </div>
+                        <div class="col-sm-3 text-secondary">
+                            @item.TraineeExam.Average(a => a.Mark) Of @item.FullMark
+                        </div>
+                        }
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="@Url.Action("Details","Exams",new { id = item.Id})" class="btn btn-info btn-lg btn-block">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </div>
+                @if (item.StartTime >= DateTime.Now || item.EndTime <= DateTime.Now)
+                {
+                    <div class="col-sm-3">
+                        <a href="@Url.Action("Edit", "Exams", new { id = item.Id })" class="btn btn-success btn-lg btn-block">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.ActionLink("Delete", "Delete", "Exams", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-danger btn-lg btn-block", onclick = "return confirm('Are You Sure.');" })
+                    </div>
+                }
+            </div>
+        </div>
+            }
+        </div>
+
+
+        @*<div class="row gutters-sm" id="Trainee" style="display:none">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        @foreach (var item in Model.Course_Trainee)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    @if (item.ApplicationUser.ImageName == "")
+                                    {
+                                        <img src="~/Content/Private_Layout/images/graduation-hat.png" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Assets/Users/@item.ApplicationUser.ImageName" />
+                                    }
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="row">
+                                        <h6>@item.ApplicationUser.Email</h6>
+                                    </div>
+                                    <div class="row">
+                                        <h6>@item.ApplicationUser.PhoneNumber</h6>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h6>@item.ApplicationUser.NickName</h6>
+                                </div>
+                                <div class="col-sm-3">
+                                    @if (item.ApplicationUser.Gender)
+                                    {
+                                        <img src="~/Content/AdminPage/Image/man.png" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/AdminPage/Image/woman.png" />
+                                    }
+                                </div>
+                            </div>
+                            <hr>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+        <div class="container" id="Trainee" style="display:none">
+            <div class="main-body">
+
+                <div class="row gutters-sm">
+                    <div class="col-md-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                @foreach (var item in Model.Course_Trainee)
+                                {
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="main-box clearfix">
+                                                    <div class="table-responsive">
+                                                        <table class="table user-list">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><span></span></th>
+                                                                    <th><span>Date</span></th>
+                                                                    <th class="text-center"><span>Gender</span></th>
+                                                                    <th><span>Name</span></th>
+                                                                    <th>&nbsp;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                @if (item.ApplicationUser.ImageName == "")
+                                                                                {
+                                                                                    <img src="~/Content/AdminPage/Image/online-course.png" style="height:70px; width:70px;border-radius: 1pc;">
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <img src="~/Assets/Users/@item.ApplicationUser.ImageName" style="height:70px; width:70px;border-radius: 1pc;">
+                                                                                }
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <p class="user-link">@item.ApplicationUser.Email</p>
+                                                                                <span class="user-subhead">@item.ApplicationUser.PhoneNumber</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p>@item.Date</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        @if (item.ApplicationUser.Gender)
+                                                                        {
+                                                                            <img src="~/Content/AdminPage/Image/man.png" style="height: 30px; width: 30px;" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/Content/AdminPage/Image/woman.png" style="height: 30px; width: 30px;" />
+                                                                        }
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <span class="label label-default">@item.ApplicationUser.NickName</span>
+                                                                    </td>
+                                                                    <td style="width: 20%;">
+                                                                        <a href="@Url.Action("DetailsTraineeForTrainer" , new { id = item.ApplicationUser.Id})" class="table-link btn btn-info">
+                                                                            <span class="fa-stack">
+                                                                                <i class="fas fa-question-circle"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+        var Material = document.getElementById("Material");
+        var Exam = document.getElementById("Exam");
+        var Trainee = document.getElementById("Trainee");
+
+        function ShowMaterial() {
+            console.log("ShowMaterial");
+            Material.style.display = "block";
+            Exam.style.display = "none";
+            Trainee.style.display = "none";
+        }
+        function ShowExam() {
+            Material.style.display = "none";
+            Exam.style.display = "block";
+            Trainee.style.display = "none";
+        }
+        function ShowTrainee() {
+            Material.style.display = "none";
+            Exam.style.display = "none";
+            Trainee.style.display = "block";
+        }
+
+
+
+
+
+        function CheckImage() {
+            var Path = document.getElementById("Upload").value;
+            var extensionImg = Path.substr(Path.lastIndexOf('.') + 1);
+            extensionImg = extensionImg.toLowerCase();
+            var validExtensions = ['mp4','docx','pdf'];
+            if ($.inArray(extensionImg, validExtensions) == -1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Extension Error',
+                    text: 'The File Should be (mp4,docx,pdf) Extension.',
+                });
+                return false;
+            } else {
+
+                var Size = document.getElementById("Upload").files[0].size / 1024 / 1024;
+
+                if (Size > 100) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Size Error',
+                        text: 'The Size Image Should be Less Than 100MB',
+                    });
+                    return false;
+                } else {
+                    imageSize = Size;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Good Job',
+                    });
+
+                    return true;
+                }
+            }
+        }
+
+
+    </script>
+}
+
+

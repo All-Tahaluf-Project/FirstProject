@@ -1,0 +1,63 @@
+﻿@model Ethink.Models.CourseSections
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+<link rel="stylesheet" href="~/Content/EditFormCourse/Css.css" />
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <div class="card">
+                    <form class="form-card" onsubmit="event.preventDefault()">
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Number Of Section<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.Number, new { @required = "required", htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Max Count Of Trainee<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.MaxCount, new { @required = "required", htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MaxCount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group">
+                            @Html.TextBoxFor(model => model.IdCourse)
+                        </div>
+
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-12 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Trainer<span class="text-danger"> *</span>
+                                </label>
+                                @Html.DropDownList("IdTrainer", null, htmlAttributes: new { @required = "required", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IdTrainer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <p style="font-size:1pc; color:red"> @ViewBag.Status</p>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Save</button> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

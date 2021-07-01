@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Ethink.Models.Testimonial>
+
+@{
+    ViewBag.Title = "TestimonialList";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>TestimonialList</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h6 class="mb-0">Text</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">Status</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">Delete</h6>
+                            </div>
+                        </div>
+                        <hr>
+                        @foreach (var item in Model)
+                        {
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h6 class="mb-0">@item.Text</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                    @if (item.Status)
+                                    {
+                                        <a href="@Url.Action("ShowTestimonial",new { id = item.Id})" class="btn btn-success">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("ShowTestimonial",new { id = item.Id})" class="btn btn-danger">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                    }
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.ActionLink("Delete", "DeleteTestimonial", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+

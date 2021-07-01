@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Ethink.Models.Employee>
+
+@{
+    ViewBag.Title = "EmployeeList";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="search">
+                    @using (Html.BeginForm("EmployeeList", "Accountant", FormMethod.Get))
+                    {
+                        @Html.Editor("UserName", new { htmlAttributes = new { @style = "width : 100%", @type = "text", @class = "search-input", placeholder = "UserName" } })
+                        <button type="submit" class="search-icon"><i class="fa fa-search"></i></button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="search">
+                    @using (Html.BeginForm("EmployeeList", "Accountant", FormMethod.Get))
+                    {
+                        @Html.Editor("Email", new { htmlAttributes = new { @style = "width : 100%", @type = "email", @class = "search-input", placeholder = "Email" } })
+                        <button type="submit" class="search-icon"><i class="fa fa-search"></i></button>
+                    }
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="search">
+                    @using (Html.BeginForm("EmployeeList", "Accountant", FormMethod.Get))
+                    {
+                        @Html.DropDownList("IdRole", (SelectList)ViewBag.Roles, "Select Class", new { @class = "form-control" })
+                        <button type="submit" class="search-icon"><i class="fa fa-search"></i></button>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row gutters-sm">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h6 class="mb-0">Username</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">Phone Number</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">NickName</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0"></h6>
+                            </div>
+                        </div>
+                        <hr>
+                        @foreach (var item in Model)
+                        {
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            @if (item.ApplicationUser.ImageName == "")
+                                            {
+                                                <img src="~/Content/AdminPage/Image/online-course.png" style=" height: 60px; width: 60px;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Assets/Users/@item.ApplicationUser.ImageName" style=" height: 60px; width: 60px;" />
+                                            }
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h6 class="mb-0">
+                                                @item.ApplicationUser.UserName
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h6 class="mb-0">@item.ApplicationUser.Email</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h6 class="mb-0">@item.ApplicationUser.PhoneNumber</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h6 class="mb-0">@item.ApplicationUser.NickName</h6>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="@Url.Action("DetailsEmployee",new { id = item.Id})" class="btn btn-info">
+                                        <i class="far fa-question-circle"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+

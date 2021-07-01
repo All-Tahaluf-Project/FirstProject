@@ -1,0 +1,237 @@
+﻿@model Ethink.Models.Input_Model.IN_Course
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<style>
+        .DateTimeInput {
+            width: 100%
+        }
+    </style>
+
+    <h2>Edit</h2>
+
+    @using (Html.BeginForm("Edit", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Course</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdCategory, "IdCategory", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdCategory", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.StartDate, new { Class = "DateTimeInput", type = "date" })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EndDate, new { Class = "DateTimeInput", type = "date" })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="upload" id="img" onchange="CheckImage()" />
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/EditFormCourse/Css.css" />
+
+
+@using (Html.BeginForm("Edit", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <div class="card">
+                    <form class="form-card" onsubmit="event.preventDefault()">
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-12 flex-column d-flex">
+                                @if(Model.Image == "")
+                {
+                    <img src="~/Content/AdminPage/Image/online-course.png" id="Image" height="150px" width="150px"/>
+                                }else
+                {
+                            <img src="~/Assets/Courses/@Model.Image" id="Image" height="150px" width="150px"/>
+                }
+                            </div>
+                            <div class="form-group col-sm-12 flex-column d-flex">
+                                <input type="file" name="upload" id="img" onchange="CheckImage()" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Name<span class="text-danger"> *</span>
+                                </label>
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Category<span class="text-danger"> *</span>
+                                </label>
+                                @Html.DropDownList("IdCategory", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IdCategory, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Start Date<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.StartDate, new { Class = "DateTimeInput", type = "date" })
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    End Date<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.EndDate, new { Class = "DateTimeInput", type = "date" })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Price<span class="text-danger"> *</span>
+                                </label>
+                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Save</button> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @section scripts{
+        <script>
+            function CheckImage() {
+                var Path = document.getElementById("img").value;
+                var extensionImg = Path.substr(Path.lastIndexOf('.') + 1);
+                extensionImg = extensionImg.toLowerCase();
+                var validExtensions = ['jpg', 'png'];
+                if ($.inArray(extensionImg, validExtensions) == -1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Extension Error',
+                        text: 'The File Should be jpg Or png Extension',
+                    });
+                    return false;
+                } else {
+
+                    var Size = document.getElementById("img").files[0].size / 1024 / 1024;
+
+                    if (Size > 0.5) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Size Error',
+                            text: 'The Size Image Should be Less Than 500KB',
+                        });
+                        return false;
+                    } else {
+                        imageSize = Size;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Good Job',
+                        });
+
+
+                        var img = document.getElementById("img");
+                        var Image = document.getElementById("Image");
+                        const [file] = img.files
+                        if (file) {
+                            Image.src = URL.createObjectURL(file)
+                        }
+
+                        return true;
+                    }
+                }
+            }
+        </script>
+    }
+

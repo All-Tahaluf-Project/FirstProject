@@ -1,0 +1,210 @@
+﻿@model Ethink.Models.CourseSections
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.Course.Image == "")
+                            {
+                                <img src="~/Content/AdminPage/Image/online-course.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/Courses/@Model.Course.Image" alt="Admin" class="rounded-circle" width="150" height="150">
+                            }
+                            <div class="mt-3">
+                                <h4>@Model.Course.Name</h4>
+                                <p class="text-secondary mb-1">@Model.Course.Price $</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Number Of Section</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Number
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Max Count Of Trainee</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.MaxCount
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Trainer</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Employee.ApplicationUser.NickName
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("Edit",new { id = Model.Id })" class="btn btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                            <div class="col-sm-4">
+                                @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("Details","Courses",new { id = Model.IdCourse})" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if (Model.Course_Trainee.Any())
+{
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        @foreach (var item in Model.Course_Trainee)
+                        {
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="main-box clearfix">
+                                            <div class="table-responsive">
+                                                <table class="table user-list">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><span></span></th>
+                                                            <th><span>Date</span></th>
+                                                            <th class="text-center"><span>Gender</span></th>
+                                                            <th><span>Name</span></th>
+                                                            <th><span>Average</span></th>
+                                                            <th>&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            @if (item.ApplicationUser.ImageName == "")
+                                                                            {
+                                                                                <img src="~/Content/AdminPage/Image/online-course.png" style="height:70px; width:70px;border-radius: 1pc;">
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <img src="~/Assets/Users/@item.ApplicationUser.ImageName" style="height:70px; width:70px;border-radius: 1pc;">
+                                                                            }
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <p class="user-link">@item.ApplicationUser.Email</p>
+                                                                            <span class="user-subhead">@item.ApplicationUser.PhoneNumber</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <p>@item.Date</p>
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.ApplicationUser.Gender)
+                                                                    {
+                                                                        <img src="~/Content/AdminPage/Image/man.png" style="height: 30px; width: 30px;" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/Content/AdminPage/Image/woman.png" style="height: 30px; width: 30px;" />
+                                                                    }
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <span class="label label-default">@item.ApplicationUser.NickName</span>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <span class="label label-default">@item.ApplicationUser.TraineeExam.Where(a=>a.Exam.CourseSections.Course_Trainee.FirstOrDefault(t=>t.Id == item.Id)!= null).Average(a=>a.HistorySolutions.Where(h=>h.Solutions.IsTrue).Sum(q=>q.Questions.Mark))</span>
+                                                                </td>
+                                                                <td style="width: 20%;">
+                                                                    <a href="@Url.Action("DetailsTrainee","Admin", new { id = item.ApplicationUser.Id,idCourseSection = item.Id })" class="table-link btn btn-info">
+                                                                        <span class="fa-stack">
+                                                                            <i class="fas fa-question-circle"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                    @Html.ActionLink("Delete", "DeleteTraineeFromCourseSection", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+}
+
+

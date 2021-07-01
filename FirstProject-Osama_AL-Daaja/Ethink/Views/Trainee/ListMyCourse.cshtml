@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Ethink.Models.Course_Trainee>
+
+@{
+    ViewBag.Title = "ListMyCourse";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@if (Model.Any())
+{
+
+    <div class="container py-5">
+        <div class="row text-center text-white mb-5">
+            <div class="col-lg-7 mx-auto">
+                <h1 class="display-4">Courses</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <ul class="list-group shadow">
+
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item">
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body order-2 order-lg-1">
+                                    <h5 class="mt-0 font-weight-bold mb-2">@item.CourseSections.Course.Name</h5>
+                                    <p class="font-italic text-muted mb-0 small">@item.CourseSections.Course.Categories.Name</p>
+                                    <p class="font-italic text-muted mb-0 small">Start Date : @item.CourseSections.Course.StartDate</p>
+                                    <p class="font-italic text-muted mb-0 small">End Date : @item.CourseSections.Course.EndDate</p>
+                                    <p class="font-italic text-muted mb-0 small">Number : @item.CourseSections.Number, Max Count : @item.CourseSections.MaxCount</p>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <h6 class="font-weight-bold my-2">@item.CourseSections.Course.Price $</h6>
+                                    </div>
+                                </div><img src="~/Assets/Courses/@item.CourseSections.Course.Image" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                            </div>
+                            <hr />
+                            <a href="@Url.Action("DetailsMyCourse", "Trainee", new { id = item.CourseSections.Id })">
+                                <i class="fas fa-info-circle btn btn-success"></i>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container py-5">
+
+        <!-- For demo purpose -->
+        <div class="row text-center text-white mb-5">
+            <div class="col-lg-7 mx-auto">
+                <h1 class="display-4">Courses</h1>
+            </div>
+        </div>
+        <!-- End -->
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+
+                <!-- List group-->
+                <ul class="list-group shadow">
+                        <li class="list-group-item">
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body order-2 order-lg-1">
+                                    <h5 class="mt-0 font-weight-bold mb-2">Empty</h5>
+                                    <p class="font-italic text-muted mb-0 small"></p>
+                                    <p class="font-italic text-muted mb-0 small"></p>
+                                    <p class="font-italic text-muted mb-0 small"></p>
+                                    <p class="font-italic text-muted mb-0 small"></p>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <h6 class="font-weight-bold my-2"></h6>
+                                    </div>
+                                </div><img src="~/Content/AdminPage/Image/online-course.png" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                            </div>
+                            <hr />
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+

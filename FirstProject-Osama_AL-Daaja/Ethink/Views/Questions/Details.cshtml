@@ -1,0 +1,178 @@
+﻿@model Ethink.Models.Questions
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>Questions</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Mark)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mark)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Exam.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Exam.Name)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="~/Content/Exam/Img/conversation.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                            <div class="mt-3">
+                                <h4>Mark : @Model.Mark</h4>
+                                <hr />
+                                <a href="@Url.Action("Details","Exams",new { id = Model.IdExam})" class="btn btn-info">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Name
+                            </div>
+                        </div>
+                        <br />
+                        <hr>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12" style="text-align:center">
+                                <h6 class="mb-0">Solutions</h6>
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var item in Model.Solutions)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @item.Name
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Is True</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @if (item.IsTrue)
+                                    {
+                                        <i class="fas fa-check"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-times"></i>
+                                    }
+                                </div>
+                            </div>
+                            <hr />
+
+                            if (Model.Exam.StartTime >= DateTime.Now || Model.Exam.EndTime <= DateTime.Now)
+                            {
+                                <div class="row">
+
+                                    <div class="col-sm-6" style="text-align:center">
+                                        @Html.ActionLink("Delete", "Delete", "Solutions", new { id = item.Id, idQ = Model.Id }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                    </div>
+
+                                    <div class="col-sm-6" style="text-align:center">
+                                        @Html.ActionLink("Edit", "Edit", "Solutions", new { id = item.Id }, new { style = "margin:10px", @class = "btn btn-success" })
+                                    </div>
+                                    <hr><br />
+                                </div>
+                            }
+
+                        }
+                        @if (Model.Exam.StartTime >= DateTime.Now || Model.Exam.EndTime <= DateTime.Now)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="@Url.Action("Create", "Solutions", new { id = Model.Id })" class="btn btn-info btn-lg btn-block">
+                                        <i class="fa fa-sync-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

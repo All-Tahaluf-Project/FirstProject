@@ -1,0 +1,157 @@
+﻿@model IEnumerable<Ethink.Models.CourseSections>
+
+@{
+    ViewBag.Title = "IndexCourses";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+<link rel="stylesheet" href="~/Content/TableCourse/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+        @using (Html.BeginForm("IndexCourses", "Trainer", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="search">
+                        @Html.Editor("Start", new { htmlAttributes = new { @type = "date", @style = "width : 100%", @class = "search-input", placeholder = "UserName" } })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="search">
+                        @Html.Editor("End", new { htmlAttributes = new { @type = "date", @style = "width : 100%", @class = "search-input", placeholder = "UserName" } })
+                    </div>
+                </div>
+
+                <div class="col-md-2" style="display: flex;">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("IndexCoursesPDF")" class="btn btn-outline-success">
+                        Download PDF
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container" style="padding: 7em 0;">
+    <div class="row" style="justify-content: center;">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel">
+                <div class="panel-body table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Number</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Number Of Student</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="~/Assets/Courses/@item.Course.Image" style="height:70px; width:70px;border-radius: 1pc;" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @Html.DisplayFor(modelItem => item.Course.Name)
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @Html.DisplayFor(modelItem => item.Course.Categories.Name)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Number)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Course.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Course.EndDate)
+                                    </td>
+                                    <td>
+
+
+                                        @if (item.Course_Trainee.Any())
+                                        {
+                                            <h5>
+                                                @item.Course_Trainee.Count()
+                                            </h5>
+                                        }
+                                        else
+                                        {
+                                            <h5>
+                                                0
+                                            </h5>
+
+                                        }
+                                        / @Html.DisplayFor(modelItem => item.MaxCount)
+
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Details",new { id = item.Id })" class="btn btn-primary">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

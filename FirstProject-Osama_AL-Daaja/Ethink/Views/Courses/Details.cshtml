@@ -1,0 +1,205 @@
+﻿@model Ethink.Models.DTO.DTOCourse
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.Course.Image == "")
+                            {
+                                <img src="~/Content/AdminPage/Image/online-course.png" alt="Admin" class="rounded-circle" 
+                                     style="height: 200px; width: 200px;">
+                            }
+                            else
+                            {
+                                <img src="~/Assets/Courses/@Model.Course.Image" alt="Admin" class="rounded-circle" width="150"
+                                     style="height: 200px; width: 200px;">
+                            }
+                            <div class="mt-3">
+                                <h4>@Model.Course.Name</h4>
+                                <p class="text-secondary mb-1">@Model.Course.Categories.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">StartDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.StartDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">EndDate</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.EndDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Price</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.Course.Price $
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="@Url.Action("Edit",new { id = Model.Course.Id })" class="btn btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="@Url.Action("Index")" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="main-body">
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    Start Date
+                                </div>
+                                <div class="col-sm-3">
+                                    End Date
+                                </div>
+                                <div class="col-sm-3">
+                                    Value
+                                </div>
+                                <div class="col-sm-3">
+                                    <a href="@Url.Action("Create","DiscountPrices",new { IdCourse = Model.Course.Id })" class="btn btn-success">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            @foreach (var item in Model.DiscountPrice)
+                            {
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @item.StartDate
+                            </div>
+                            <div class="col-sm-3">
+                                @item.EndDate
+                            </div>
+                            <div class="col-sm-3">
+                                @item.DiscountValue
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="@Url.Action("Details","DiscountPrices",new { id = item.Id })" class="btn btn-info">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Number</h6>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Max Count</h6>
+                            </div>
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Trainer</h6>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="@Url.Action("Create","CourseSections",new { IdCourse = Model.Course.Id })" class="btn btn-success">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var item in Model.CourseSections)
+                        {
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @item.Number
+                        </div>
+                        <div class="col-sm-3">
+                            @item.Course_Trainee.Count()/@item.MaxCount
+                        </div>
+                        <div class="col-sm-3">
+                            @item.Employee.ApplicationUser.NickName
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="@Url.Action("Details","CourseSections",new { id = item.Id })" class="btn btn-info">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+

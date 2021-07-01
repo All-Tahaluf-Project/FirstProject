@@ -1,0 +1,160 @@
+﻿@model Ethink.Models.DiscountPrice
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>DiscountPrice</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DiscountValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdCourse, "IdCourse", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdCourse", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCourse, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/EditFormCourse/Css.css" />
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <div class="card">
+                    <form class="form-card" onsubmit="event.preventDefault()">
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    Start Time<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.StartDate, new { Class = "DateTimeInput", type = "date" })
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    End Time<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.EndDate, new { Class = "DateTimeInput", type = "date" })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-12 flex-column d-flex">
+                                <label class="form-control-label px-3">
+                                    DiscountValue<span class="text-danger"> *</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.DiscountValue, new { Class = "DateTimeInput", type = "number" })
+                                @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Save</button> </div>
+                            <div class="form-group col-sm-6">
+                                <a href="@Url.Action("Details","Courses",new { id = Model.IdCourse})" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

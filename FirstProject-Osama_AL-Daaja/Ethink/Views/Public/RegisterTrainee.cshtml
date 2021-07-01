@@ -1,0 +1,71 @@
+﻿@model Ethink.Models.Input_Model.IN_RegisterTrainee
+
+@{
+    ViewBag.Title = "RegisterTrainee";
+    Layout = "~/Views/Shared/_Public_Layout.cshtml";
+}
+
+
+
+
+
+
+
+<img src="/Content/Public_Layout/images/pexels-skitterphoto-1005324.jpg" class="bg">
+
+
+<div class=" row " id="top">
+    <div class="col md 2">
+    </div>
+
+    <div class="col-md-8 Form">
+        <h3>Register</h3>
+        <img class="img" src="/Content/Public_Layout/images/education (1).png">
+        <br>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "UserName" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            <br />
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control", placeholder = "Password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            <br />
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @type = "email", @class = "form-control", placeholder = "E-Email Address" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            <br />
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @type = "number", @class = "form-control", placeholder = "Phone Number" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            <br />
+            @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control", placeholder = "NickName" } })
+            @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
+            <br />
+            <div class="row">
+                Gender
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" style="text-align:center;    font-size: 2pc;">
+                    @Html.RadioButtonFor(m => m.Gender, false, new { @checked = true })<i class="fas fa-female"></i>
+                </div>
+                <div class="col-md-6" style="text-align:center;    font-size: 2pc;">
+                    @Html.RadioButtonFor(m => m.Gender, true)<i class="fas fa-male"></i>
+                </div>
+            </div>
+            <hr>
+            <div style="color:red">
+                @ViewBag.Status
+            </div>
+
+            <div class="form-button mt-3">
+                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-2">
+
+    </div>
+
+
+</div>

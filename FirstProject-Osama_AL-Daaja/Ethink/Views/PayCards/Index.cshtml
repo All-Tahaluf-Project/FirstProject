@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Ethink.Models.PayCard>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/PayCard/Css.css" />
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <div class="table-responsive">
+                    <table class="table user-list">
+                        <thead>
+                            <tr>
+                                <th><span>Card</span></th>
+                                <th><span>Total</span></th>
+                                @*<th class="text-center"><span>Status</span></th>
+                <th><span>Email</span></th>*@
+                            <th style="text-align: center;">
+                                <a href="@Url.Action("Create")" class="btn btn-success">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @if (item.Name == "mastercard")
+                                        {
+                                            <i class="fab fa-cc-mastercard"></i>
+                                        }
+                                        @if (item.Name == "paypal")
+                                        {
+                                            <i class="fab fa-cc-paypal"></i>
+                                        }
+                                        @if (item.Name == "visa")
+                                        {
+                                            <i class="fab fa-cc-visa"></i>
+                                        }
+                                        <span class="user-subhead">@item.Name</span>
+                                    </td>
+                                    <td>
+                                        @item.Total
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-6" style="text-align: center;">
+                                                <a href="@Url.Action("Edit",new { id = item.Id })" class="btn btn-success">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-6" style="text-align: center;">
+                                                <a href="@Url.Action("Details",new { id = item.Id })" class="btn btn-primary">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

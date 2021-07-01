@@ -1,0 +1,167 @@
+﻿@model Ethink.Models.Input_Model.IN_PaymentLog
+
+@{
+    ViewBag.Title = "PaymentLog";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>PaymentLog</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(a=>a.IdCourseSection)
+
+        <div class="form-horizontal">
+            <h4>PayLog</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdCard, "IdCard", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdCard", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCard, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Status)
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container py-5">
+    <div class="row text-center text-white mb-5">
+        <div class="col-lg-7 mx-auto">
+            <h1 class="display-4">Requests</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <ul class="list-group shadow">
+                <li class="list-group-item">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.IdCourseSection)
+                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                            <div class="media-body order-2 order-lg-1">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        Value :
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        Code :
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Code, new { @type = "text", htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        Card :
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.DropDownList("IdCard", null, htmlAttributes: new { @class = "form-control" })
+                                        @*@Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @type = "date", @class = "form-control" } })*@
+                                        @Html.ValidationMessageFor(model => model.IdCard, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        Status :
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Status)
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-1">
+                                    <h6 class="font-weight-bold my-2"></h6>
+                                </div>
+                            </div><img src="~/Content/PayCard/Img/debit-card.png" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12" style="text-align: center; color: red; font-size: 2pc;">
+                                @ViewBag.Status
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-6">
+                                <input type="submit" value="Create" class="btn btn-success" />
+                                <a href="@Url.Action("DetailsMyCourse",new { id = Model.IdCourseSection})" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+

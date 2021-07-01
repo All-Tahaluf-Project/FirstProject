@@ -1,0 +1,118 @@
+﻿@model Ethink.Models.PayCard
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>PayCard</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CardCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CardCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CardCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdTrainee, "IdTrainee", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdTrainee", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdTrainee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .padding {
+        padding: 5rem !important
+    }
+
+    .form-control:focus {
+        box-shadow: 10px 0px 0px 0px #ffffff !important;
+        border-color: #4ca746
+    }
+</style>
+
+
+
+
+
+<div class="padding">
+    <div class="row">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="col-sm-8 col-md-6">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6"> <span>DEBIT CARD PAYMENT</span> </div>
+                                <div class="col-md-6 text-right" style="margin-top: -5px;"> <img src="~/Content/PayCard/Img/visa.png"> <img src="~/Content/PayCard/Img/paypal.png" style=" height: 25px; width: 25px;"> <img src="~/Content/PayCard/Img/mastercard.png"> </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 350px">
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label">CARD Code</label>
+                                @Html.EditorFor(model => model.CardCode, new { @required = "required", htmlAttributes = new { @class = "input-lg form-control cc-number", @placeholder = "•••• •••• •••• ••••" } })
+                                @Html.ValidationMessageFor(model => model.CardCode, "", new { @class = "text-danger" })
+                                @*<input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>*@
+                            </div>
+                            <p style="font-size:2pc;color:red;">@ViewBag.Status</p>
+                            <div class="form-group"> <input value="Submit" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;"> </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

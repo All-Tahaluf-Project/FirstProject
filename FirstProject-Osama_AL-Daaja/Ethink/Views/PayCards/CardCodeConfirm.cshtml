@@ -1,0 +1,77 @@
+﻿@model Ethink.Models.Input_Model.IN_CardCodeConfirm 
+
+@{
+    ViewBag.Title = "CardCodeConfirm";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+<style>
+    .padding {
+        padding: 5rem !important
+    }
+
+    .form-control:focus {
+        box-shadow: 10px 0px 0px 0px #ffffff !important;
+        border-color: #4ca746
+    }
+</style>
+
+
+
+
+
+<div class="padding">
+    <div class="row">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="col-sm-8 col-md-6">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6"> <span>DEBIT CARD PAYMENT</span> </div>
+                                <div class="col-md-6 text-right" style="margin-top: -5px;"> <img src="~/Content/PayCard/Img/visa.png"> <img src="~/Content/PayCard/Img/paypal.png" style=" height: 25px; width: 25px;"> <img src="~/Content/PayCard/Img/mastercard.png"> </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 350px">
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label">CARD Code</label>
+                                @Html.EditorFor(model => model.ConfirmCode, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "•••• •••• •••• ••••" } })
+                                @*<input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>*@
+                            </div>
+
+                            <div hidden class="form-group">
+                                <label for="cc-number" class="control-label">CARD Code</label>
+                                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "•••• •••• •••• ••••" } })
+                                @*<input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>*@
+                            </div>
+                            <div hidden class="form-group">
+                                <label for="cc-number" class="control-label">CARD Code</label>
+                                @Html.EditorFor(model => model.CodeEmail, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "•••• •••• •••• ••••" } })
+                                @*<input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>*@
+                            </div>
+                            <div hidden class="form-group">
+                                <label for="cc-number" class="control-label">CARD Code</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "•••• •••• •••• ••••" } })
+                                @*<input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="•••• •••• •••• ••••" required>*@
+                            </div>
+
+                            <div class="form-group"> <input value="Submit" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;"> </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

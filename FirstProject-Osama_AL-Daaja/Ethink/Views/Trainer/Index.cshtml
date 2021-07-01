@@ -1,0 +1,157 @@
+﻿@model Ethink.Models.DTO.DTOTrainerPage
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/AdminPage/Css.css">
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+<div class="container">
+    <div class="main-body">
+        @using (Html.BeginForm("Index", "Trainer", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="search">
+                        @Html.Editor("Start", new { htmlAttributes = new { @type = "date", @style = "width : 100%", @class = "search-input", placeholder = "UserName" } })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="search">
+                        @Html.Editor("End", new { htmlAttributes = new { @type = "date", @style = "width : 100%", @class = "search-input", placeholder = "UserName" } })
+                    </div>
+                </div>
+
+                <div class="col-md-2" style="display: flex;">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="col-md-2">
+                    <a href="@Url.Action("IndexPDF")" class="btn btn-outline-success">
+                        Download PDF
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="/Content/AdminPage/Image/pexels-pixabay-207691.jpg" alt="profile-sample1" class="background" />
+                    <img src="/Content/AdminPage/Image/online-course.png" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <h2>
+                            Course
+                            <hr />
+                            <small>@Model.CountCourseSection</small>
+                        </h2>
+                    </div>
+                </div>
+                <p class="mt-3 w-100 float-left text-center"><strong>Courses</strong></p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="/Content/AdminPage/Image/pexels-andrea-piacquadio-716411.jpg" alt="profile-sample1" class="background" />
+                    <img src="/Content/AdminPage/Image/man.png" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <h2>
+                            Male<small>@Model.CountCourseSectionMaleTrainee</small>
+                        </h2>
+                    </div>
+                </div>
+                <p class="mt-3 w-100 float-left text-center"><strong>Count Of Male Trainees</strong></p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="/Content/AdminPage/Image/pexels-ketut-subiyanto-4126750.jpg" alt="profile-sample1" class="background" />
+                    <img src="/Content/AdminPage/Image/woman.png" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <h2>
+                            Female<small>@Model.CountCourseSectionFemaleTrainee</small>
+                        </h2>
+                    </div>
+                </div>
+                <p class="mt-3 w-100 float-left text-center"><strong>Count Of Female Trainees</strong></p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="~/Content/Trainer/Image/pexels-max-fischer-5212345.jpg" alt="profile-sample1" class="background" />
+                    <img src="~/Content/Trainer/Image/pexels-max-fischer-5212345.jpg" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>
+                                    Sum Of Marks
+                                    <hr />
+                                    <small>@Model.SumOfMarks</small>
+                                </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>
+                                    Sum Of Total Marks
+                                    <hr />
+                                    <small>@Model.SumOfTotalMarks</small>
+                                </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>
+                                    Sum Of AVG
+                                    <hr />
+                                    <small>@Model.SumOfAVG</small>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="~/Content/Trainer/Image/pexels-koshevayak-4170629.jpg" alt="profile-sample1" class="background" />
+                    <img src="~/Content/Trainer/Image/pexels-koshevayak-4170629.jpg" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <h2>
+                            Max Mark <small>@Model.MaxMark</small>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card profile-card-1">
+                    <img src="~/Content/Trainer/Image/pexels-energepiccom-313690.jpg" alt="profile-sample1" class="background" />
+                    <img src="~/Content/Trainer/Image/pexels-energepiccom-313690.jpg" alt="profile-image" class="profile" />
+                    <div class="card-content">
+                        <h2>
+                            Min Mark <small>@Model.MinMark</small>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+

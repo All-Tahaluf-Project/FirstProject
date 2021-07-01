@@ -1,0 +1,337 @@
+﻿@model Ethink.Models.DTO.DTOApplicationUser
+
+@{
+    ViewBag.Title = "EditMyProfile";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+<style>
+    .register {
+        background: -webkit-linear-gradient(left, #ffc459, #ff0000);
+        margin-top: 3%;
+        padding: 3%;
+    }
+
+    .register-left {
+        text-align: center;
+        color: #fff;
+        margin-top: 4%;
+    }
+
+        .register-left input {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 2%;
+            width: 60%;
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #383d41;
+            margin-top: 30%;
+            margin-bottom: 3%;
+            cursor: pointer;
+        }
+
+    .register-right {
+        background: #f8f9fa;
+        border-top-left-radius: 10% 50%;
+        border-bottom-left-radius: 10% 50%;
+    }
+
+    .register-left img {
+        margin-top: 15%;
+        margin-bottom: 5%;
+        width: 25%;
+        -webkit-animation: mover 2s infinite alternate;
+        animation: mover 1s infinite alternate;
+    }
+
+    .register-left p {
+        font-weight: lighter;
+        padding: 12%;
+        margin-top: -9%;
+    }
+
+    .register .register-form {
+        padding: 10%;
+        margin-top: 10%;
+    }
+
+    .btnRegister {
+        float: right;
+        margin-top: 10%;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #0062cc;
+        color: #fff;
+        font-weight: 600;
+        width: 50%;
+        cursor: pointer;
+    }
+
+    .register .nav-tabs {
+        margin-top: 3%;
+        border: none;
+        background: #0062cc;
+        border-radius: 1.5rem;
+        width: 28%;
+        float: right;
+    }
+
+        .register .nav-tabs .nav-link {
+            padding: 2%;
+            height: 34px;
+            font-weight: 600;
+            color: #fff;
+            border-top-right-radius: 1.5rem;
+            border-bottom-right-radius: 1.5rem;
+        }
+
+            .register .nav-tabs .nav-link:hover {
+                border: none;
+            }
+
+            .register .nav-tabs .nav-link.active {
+                width: 100px;
+                color: #0062cc;
+                border: 2px solid #0062cc;
+                border-top-left-radius: 1.5rem;
+                border-bottom-left-radius: 1.5rem;
+            }
+
+    .register-heading {
+        text-align: center;
+        margin-top: 8%;
+        margin-bottom: -15%;
+        color: #495057;
+    }
+</style>
+
+
+
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            @if (Model.ImageName == "" || Model.ImageName == null)
+            {
+                <img src="~/Content/Private/Image/education.png" id="Image" style=" width: 100px; height: 100px;" />
+            }
+            else
+            {
+                <img src="~/Assets/Users/@Model.ImageName" id="Image" style=" width: 100px; height: 100px;"/>
+            }
+            <h3>My Image</h3>
+
+            @using (Html.BeginForm("EditImage", "Private", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input required type="file" name="MyImage" id="img" onchange="CheckImage()" />
+                <input type="submit" name="" value="Upload" />
+                <br />
+            }
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Hirer</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">Edit Your Profile</h3>
+                    <div class="row register-form">
+
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditUserName", "Private", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", required = "required", @type = "text", placeholder = "Username" } })
+                                            <br />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditEmail", "Private", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", required = "required", @type = "email", placeholder = "E-Email Address" } })
+                                            <br />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditPassword", "Private", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", required = "required", @type = "password", placeholder = "Password" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @type = "password", @class = "form-control", required = "required", placeholder = "Confirm Password" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditPhoneNumber", "Private", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", required = "required", @type = "number", placeholder = "Phone Number" } })
+                                            <br />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditNickName", "Private", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control", required = "required", @type = "text", placeholder = "NickName" } })
+                                            <br />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("EditGender", "Private", FormMethod.Post))
+                            {
+                                <div class="form-group">
+                                    <div class="maxl">
+                                        <div class="row">
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <label class="radio inline">
+                                                    @Html.RadioButtonFor(m => m.Gender, false)<i class="fas fa-female"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <label class="radio inline">
+                                                    @Html.RadioButtonFor(m => m.Gender, true)<i class="fas fa-male"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <input style="margin: 0; width: 100%;" type="submit" class="btnRegister" value="Update" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+
+        function CheckImage() {
+            var Path = document.getElementById("img").value;
+            var extensionImg = Path.substr(Path.lastIndexOf('.') + 1);
+            extensionImg = extensionImg.toLowerCase();
+            var validExtensions = ['jpg', 'png'];
+            if ($.inArray(extensionImg, validExtensions) == -1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Extension Error',
+                    text: 'The File Should be jpg Or png Extension',
+                });
+                return false;
+            } else {
+
+                var Size = document.getElementById("img").files[0].size / 1024 / 1024;
+
+                if (Size > 0.5) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Size Error',
+                        text: 'The Size Image Should be Less Than 500KB',
+                    });
+                    return false;
+                } else {
+                    imageSize = Size;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Good Job',
+                    });
+
+                    var img = document.getElementById("img");
+                    var Image = document.getElementById("Image");
+
+                    const [file] = img.files
+                    if (file) {
+                        Image.src = URL.createObjectURL(file)
+                    }
+
+                    return true;
+                }
+            }
+        }
+    </script>
+}
+
+
+
+

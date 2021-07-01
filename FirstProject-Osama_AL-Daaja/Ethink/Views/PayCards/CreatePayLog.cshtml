@@ -1,0 +1,137 @@
+﻿@model Ethink.Models.PayLog
+
+@{
+    ViewBag.Title = "CreatePayLog";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>CreatePayLog</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>PayLog</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Status)
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .padding {
+        padding: 5rem !important
+    }
+
+    .form-control:focus {
+        box-shadow: 10px 0px 0px 0px #ffffff !important;
+        border-color: #4ca746
+    }
+</style>
+
+
+
+
+
+<div class="padding">
+    <div class="row">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="col-sm-8 col-md-6">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6"> <span>DEBIT CARD PAYMENT</span> </div>
+                            <div class="col-md-6 text-right" style="margin-top: -5px;"> <img src="~/Content/PayCard/Img/visa.png"> <img src="~/Content/PayCard/Img/paypal.png" style=" height: 25px; width: 25px;"> <img src="~/Content/PayCard/Img/mastercard.png"> </div>
+                        </div>
+                    </div>
+                    <div hidden>
+                        @Html.EditorFor(model => model.IdCard, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "Value" } })
+                    </div>
+                    <div class="card-body" style="height: 350px">
+                        <div class="form-group">
+                            <label for="cc-number" class="control-label">Value</label>
+                            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @required = "required", @class = "input-lg form-control cc-number", @placeholder = "Value" } })
+                            @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cc-number" class="control-label">Status(Are You Have Problem.)</label>
+                            @Html.CheckBoxFor(m => m.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        @ViewBag.Status
+                        <div class="form-group"> <input value="Submit" type="submit" class="btn btn-success btn-lg form-control" style="font-size: .8rem;"> </div>
+                        <div class="form-group">
+                            <a href="@Url.Action("Index","PayCards")" class="btn btn-danger btn-lg form-control">
+                                <i class="far fa-arrow-alt-circle-left"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

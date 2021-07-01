@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Ethink.Models.Categories>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .row {
+        justify-content: center;
+    }
+</style>
+
+
+
+<div class="container">
+    <div class="main-body">
+        <div  style="justify-content: center;
+        align-items: center;" class="row gutters-sm">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Name</h6>
+                            </div>
+                            <div class="col-sm-5 text-secondary">
+
+                            </div>
+                            <div class="col-sm-5 text-secondary">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:center">
+                                        <a href="@Url.Action("Create")" class="btn btn-success btn-lg btn-block">
+                                            <i class="far fa-plus-square"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">@item.Name</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <div class="row">
+                                        <div class="col-md-6" style="text-align:center">
+                                            <a href="@Url.Action("Edit",new { id = item.Id})" class="btn btn-success btn-lg btn-block">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:center">
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id, }, new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

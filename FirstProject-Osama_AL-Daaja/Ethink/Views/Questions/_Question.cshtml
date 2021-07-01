@@ -1,0 +1,95 @@
+﻿
+@model Ethink.Models.Solutions
+
+@*@Html.BeginForm("AddQuestion", "Questions", FormMethod.Get)
+    {
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Mark</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Html.EditorFor(model => model.IsTrue, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsTrue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    </div>
+    }*@
+
+@*<div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Html.EditorFor(model => model.Name, new { @required = "required", htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Mark</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Html.EditorFor(model => model.IsTrue, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsTrue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <input type="submit" value="Submit" />
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@using (Html.BeginForm("AddQuestion", "Questions", FormMethod.Get))
+{
+    @Html.Editor("Name", new { htmlAttributes = new { @style = "width : 100%", @type = "text", @class = "form-control", placeholder = "Name" } })
+
+    @Html.Editor("IsTrue", new { htmlAttributes = new { @style = "width : 100%", @type = "checkbox", @class = "form-control", placeholder = "IsTrue" } })
+    <button type="submit" class="btn btn-default" title="Reload">Submit</button>
+}
+
+
+
+

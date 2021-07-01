@@ -1,0 +1,133 @@
+﻿@model Ethink.Models.Solutions
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+@*<h2>Create</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Solutions</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(a=>a.IdQusetions)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsTrue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsTrue)
+                        @Html.ValidationMessageFor(model => model.IsTrue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(a => a.IdQusetions)
+
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="~/Content/Exam/Img/conversation.png" alt="Admin" class="rounded-circle" width="150" height="150">
+                                <div class="mt-3">
+                                    <a href="@Url.Action("Details","Questions",new { id = Model.IdQusetions})" class="btn btn-info">
+                                        Back
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Is True</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+
+                                    @Html.EditorFor(model => model.IsTrue)
+                                    @Html.ValidationMessageFor(model => model.IsTrue, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="submit" value="Create" class="btn btn-success btn-lg btn-block" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

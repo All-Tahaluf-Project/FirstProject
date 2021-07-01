@@ -1,0 +1,718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FirstProjectTahalufModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ApplicationUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+    <Property Name="ImageName" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Block" Type="bit" Nullable="false" />
+    <Property Name="NickName" Type="varchar" MaxLength="50" />
+    <Property Name="Gender" Type="bit" />
+  </EntityType>
+  <EntityType Name="Assess">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Certificates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'FirstProjectTahaluf.dbo.ContactUs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Message" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdCategory" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Course_Trainee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseSections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="IdCourse" Type="int" Nullable="false" />
+    <Property Name="MaxCount" Type="int" Nullable="false" />
+    <Property Name="IdTrainer" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DiscountPrice">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" Nullable="false" />
+    <Property Name="DiscountValue" Type="float" Nullable="false" />
+    <Property Name="IdCourse" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="FullMark" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorySolutions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdQusetions" Type="int" Nullable="false" />
+    <Property Name="IdTraineeExam" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Materials">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PayCard">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CardCode" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" />
+  </EntityType>
+  <EntityType Name="PayLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="IdCard" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="IdCourseSection" Type="int" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="PaySalary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdEmployee" Type="int" Nullable="false" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdExam" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Ratio" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequestRegister">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Solutions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdQusetions" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IsTrue" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'FirstProjectTahaluf.dbo.Testimonial' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Testimonial">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Text" Type="varchar" MaxLength="500" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="TraineeExam">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdExam" Type="int" Nullable="false" />
+    <Property Name="Mark" Type="float" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="IdRole" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Assess_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assess">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assess_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assess">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Certificates_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="Certificates" Type="Self.Certificates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Certificates">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Certificates_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="Certificates" Type="Self.Certificates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Certificates">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Course_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Course" Type="Self.Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="IdCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Course_Trainee_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="Course_Trainee" Type="Self.Course_Trainee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Course_Trainee">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Course_Trainee_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="Course_Trainee" Type="Self.Course_Trainee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Course_Trainee">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseSections_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSections">
+        <PropertyRef Name="IdCourse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseSections_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseSections">
+        <PropertyRef Name="IdTrainer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DiscountPrice_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="DiscountPrice" Type="Self.DiscountPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DiscountPrice">
+        <PropertyRef Name="IdCourse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Users">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Exam_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Exam">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorySolutions_Questions">
+    <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+    <End Role="HistorySolutions" Type="Self.HistorySolutions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistorySolutions">
+        <PropertyRef Name="IdQusetions" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistorySolutions_TraineeExam">
+    <End Role="TraineeExam" Type="Self.TraineeExam" Multiplicity="1" />
+    <End Role="HistorySolutions" Type="Self.HistorySolutions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TraineeExam">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistorySolutions">
+        <PropertyRef Name="IdTraineeExam" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Materials_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="Materials" Type="Self.Materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Materials">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PayCard_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="0..1" />
+    <End Role="PayCard" Type="Self.PayCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PayCard">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PayProcesses_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="0..1" />
+    <End Role="PayLog" Type="Self.PayLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PayLog">
+        <PropertyRef Name="IdCourseSection" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PayProcesses_PayCard1">
+    <End Role="PayCard" Type="Self.PayCard" Multiplicity="1" />
+    <End Role="PayLog" Type="Self.PayLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PayCard">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PayLog">
+        <PropertyRef Name="IdCard" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaySalary_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PaySalary" Type="Self.PaySalary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaySalary">
+        <PropertyRef Name="IdEmployee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Exam">
+    <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
+    <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exam">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Questions">
+        <PropertyRef Name="IdExam" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestRegister_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="RequestRegister" Type="Self.RequestRegister" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestRegister">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestRegister_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="RequestRegister" Type="Self.RequestRegister" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestRegister">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Solutions_Questions">
+    <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+    <End Role="Solutions" Type="Self.Solutions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Solutions">
+        <PropertyRef Name="IdQusetions" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TraineeExam_ApplicationUser">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="TraineeExam" Type="Self.TraineeExam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TraineeExam">
+        <PropertyRef Name="IdTrainee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TraineeExam_CourseSections">
+    <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+    <End Role="TraineeExam" Type="Self.TraineeExam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseSections">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TraineeExam">
+        <PropertyRef Name="IdCourseSections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TraineeExam_Exam">
+    <End Role="Exam" Type="Self.Exam" Multiplicity="1" />
+    <End Role="TraineeExam" Type="Self.TraineeExam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exam">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TraineeExam">
+        <PropertyRef Name="IdExam" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="IdRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_Users">
+    <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApplicationUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FirstProjectTahalufModelStoreContainer">
+    <EntitySet Name="ApplicationUser" EntityType="Self.ApplicationUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assess" EntityType="Self.Assess" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Certificates" EntityType="Self.Certificates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Course_Trainee" EntityType="Self.Course_Trainee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseSections" EntityType="Self.CourseSections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DiscountPrice" EntityType="Self.DiscountPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistorySolutions" EntityType="Self.HistorySolutions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PayCard" EntityType="Self.PayCard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PayLog" EntityType="Self.PayLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaySalary" EntityType="Self.PaySalary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestRegister" EntityType="Self.RequestRegister" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Solutions" EntityType="Self.Solutions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TraineeExam" EntityType="Self.TraineeExam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactUs" EntityType="Self.ContactUs" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ContactUs].[Id] AS [Id], 
+    [ContactUs].[Name] AS [Name], 
+    [ContactUs].[Email] AS [Email], 
+    [ContactUs].[PhoneNumber] AS [PhoneNumber], 
+    [ContactUs].[Message] AS [Message]
+    FROM [dbo].[ContactUs] AS [ContactUs]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Testimonial" EntityType="Self.Testimonial" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Testimonial].[Id] AS [Id], 
+    [Testimonial].[Text] AS [Text], 
+    [Testimonial].[Status] AS [Status]
+    FROM [dbo].[Testimonial] AS [Testimonial]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Assess_ApplicationUser" Association="Self.FK_Assess_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="Assess" EntitySet="Assess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assess_CourseSections" Association="Self.FK_Assess_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="Assess" EntitySet="Assess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Certificates_ApplicationUser" Association="Self.FK_Certificates_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="Certificates" EntitySet="Certificates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Certificates_CourseSections" Association="Self.FK_Certificates_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="Certificates" EntitySet="Certificates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Course_Categories" Association="Self.FK_Course_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Course" EntitySet="Course" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Course_Trainee_ApplicationUser" Association="Self.FK_Course_Trainee_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="Course_Trainee" EntitySet="Course_Trainee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Course_Trainee_CourseSections" Association="Self.FK_Course_Trainee_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="Course_Trainee" EntitySet="Course_Trainee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseSections_Course" Association="Self.FK_CourseSections_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="CourseSections" EntitySet="CourseSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseSections_Employee" Association="Self.FK_CourseSections_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="CourseSections" EntitySet="CourseSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DiscountPrice_Course" Association="Self.FK_DiscountPrice_Course">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="DiscountPrice" EntitySet="DiscountPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Users" Association="Self.FK_Employee_Users">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Exam_CourseSections" Association="Self.FK_Exam_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="Exam" EntitySet="Exam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorySolutions_Questions" Association="Self.FK_HistorySolutions_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="HistorySolutions" EntitySet="HistorySolutions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistorySolutions_TraineeExam" Association="Self.FK_HistorySolutions_TraineeExam">
+      <End Role="TraineeExam" EntitySet="TraineeExam" />
+      <End Role="HistorySolutions" EntitySet="HistorySolutions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Materials_CourseSections" Association="Self.FK_Materials_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="Materials" EntitySet="Materials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PayCard_ApplicationUser" Association="Self.FK_PayCard_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="PayCard" EntitySet="PayCard" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PayProcesses_CourseSections" Association="Self.FK_PayProcesses_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="PayLog" EntitySet="PayLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PayProcesses_PayCard1" Association="Self.FK_PayProcesses_PayCard1">
+      <End Role="PayCard" EntitySet="PayCard" />
+      <End Role="PayLog" EntitySet="PayLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaySalary_Employee" Association="Self.FK_PaySalary_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PaySalary" EntitySet="PaySalary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Exam" Association="Self.FK_Questions_Exam">
+      <End Role="Exam" EntitySet="Exam" />
+      <End Role="Questions" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestRegister_ApplicationUser" Association="Self.FK_RequestRegister_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="RequestRegister" EntitySet="RequestRegister" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestRegister_CourseSections" Association="Self.FK_RequestRegister_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="RequestRegister" EntitySet="RequestRegister" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Solutions_Questions" Association="Self.FK_Solutions_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="Solutions" EntitySet="Solutions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TraineeExam_ApplicationUser" Association="Self.FK_TraineeExam_ApplicationUser">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="TraineeExam" EntitySet="TraineeExam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TraineeExam_CourseSections" Association="Self.FK_TraineeExam_CourseSections">
+      <End Role="CourseSections" EntitySet="CourseSections" />
+      <End Role="TraineeExam" EntitySet="TraineeExam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TraineeExam_Exam" Association="Self.FK_TraineeExam_Exam">
+      <End Role="Exam" EntitySet="Exam" />
+      <End Role="TraineeExam" EntitySet="TraineeExam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_Users" Association="Self.FK_UserRole_Users">
+      <End Role="ApplicationUser" EntitySet="ApplicationUser" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
