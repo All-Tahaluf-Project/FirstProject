@@ -34,7 +34,7 @@ namespace Ethink.Controllers.CRUD_Admin
         // GET: CourseSections/Create
         public ActionResult Create(int IdCourse)
         {
-            var Employees = db.Employee.Select(a => new
+            var Employees = db.Employee.Where(a => a.ApplicationUser.UserRole.Any(r => r.IdRole == 3)).Select(a => new
             {
                 Id = a.Id,
                 NickName = a.ApplicationUser.NickName
@@ -56,7 +56,7 @@ namespace Ethink.Controllers.CRUD_Admin
         {
             if(model.MaxCount == 0 || model.Number == 0 || model.IdTrainer == 0)
             {
-                var Employees = db.Employee.Select(a => new
+                var Employees = db.Employee.Where(a=>a.ApplicationUser.UserRole.Any(r=>r.IdRole == 3)).Select(a => new
                 {
                     Id = a.Id,
                     NickName = a.ApplicationUser.NickName
@@ -79,7 +79,7 @@ namespace Ethink.Controllers.CRUD_Admin
                 return RedirectToAction("Details", "Courses", new { Id = courseSections.IdCourse });
             }
 
-            var AllEmployee = db.Employee.Select(a => new
+            var AllEmployee = db.Employee.Where(a => a.ApplicationUser.UserRole.Any(r => r.IdRole == 3)).Select(a => new
             {
                 Id = a.Id,
                 NickName = a.ApplicationUser.NickName

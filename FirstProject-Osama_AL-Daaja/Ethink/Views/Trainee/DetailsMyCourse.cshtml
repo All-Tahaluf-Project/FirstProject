@@ -51,7 +51,28 @@
                             }
                             <div class="mt-3">
                                 <h4>@Model.Course.Course.Name</h4>
-                                <p class="text-secondary mb-1">@Model.Course.Course.Price $</p>
+                                <p class="text-secondary mb-1">
+                                    @if (Model.Course.Course.DiscountPrice.Any(a => a.EndDate > Model.ApplicationUser.Course_Trainee.FirstOrDefault(c => c.CourseSections.Id == Model.Course.Id).Date
+                                                 && a.StartDate < Model.ApplicationUser.Course_Trainee.FirstOrDefault(c => c.CourseSections.Id == Model.Course.Id).Date))
+                                                {
+                                                    {
+                                                        var Dis = Model.Course.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue;
+                                                        var value = Convert.ToDouble(Model.Course.Course.Price) - Dis /100 * (Convert.ToDouble(Model.Course.Course.Price));
+                                            <span>
+                                                @Model.Course.Course.Price $ @Dis % => @value
+
+                                            </span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                        <span>
+                                            @Model.Course.Course.Price $
+
+                                        </span>
+                                                }
+
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -90,20 +111,20 @@
 
 
                         @if (Model.Course.Course.EndDate <= DateTime.Now)
-                        {
+                                            {
                     <div class="row">
                         <div class="col-sm-3">
                             <h6 class="mb-0">Certificate</h6>
                         </div>
                         <div class="col-sm-3 text-secondary">
                             @if (Model.ApplicationUser.Certificates.Any())
-                            {
+                                            {
                                 <h6 class="mb-0">
                                     @Html.ActionLink("Download Certificates", "DownloadCertificates", new { Name = Model.ApplicationUser.Certificates.Last().Name })
                                 </h6>
                             }
                             else
-                            {
+                                    {
                                 <h6>Empty</h6>
                             }
                         </div>
@@ -113,12 +134,12 @@
                         <div class="col-sm-3">
                             <h6 class="mb-0">
                                 @Model.Exam.Average(a => a.TraineeExam.Sum(s => s.Mark))
-                                @if (Model.Exam.Average(a => a.TraineeExam.Sum(s => s.Mark)) < Model.Exam.Average(a => a.TraineeExam.Sum(s => s.Mark)) / 2)
+                                @if (Model.Exam.Where(a=> a.CourseSections.Id == Model.Course.Id && a.FullMark <= a.Questions.Sum(q => q.Mark)).Average(a => a.TraineeExam.Sum(s => s.Mark)) < Model.Exam.Average(a => a.TraineeExam.Sum(s => s.Mark)) / 2)
                                 {
                                     <i class="fas fa-clipboard-list" style="color: red;"></i>
                                 }
                                 else
-                                {
+                                    {
                                     <i class="fas fa-clipboard-list" style="color: green;"></i>
                                 }
                             </h6>
@@ -135,7 +156,14 @@
                                 <button type="button" onclick="ShowExam()" class="btn btn-primary btn-lg btn-block">Exams</button>
                             </div>
                             <div class="col-sm-4">
-                                <button type="button" onclick="ShowPayments()" class="btn btn-primary btn-lg btn-block">Payments</button>
+                                @if (Model.ApplicationUser.PayCard.Any())
+                                {
+                                    <button type="button" onclick="ShowPayments()" class="btn btn-primary btn-lg btn-block">Payments</button>
+                                }
+                                else
+                                    {
+                            <button type="button" class="btn btn-primary btn-lg btn-block">Make Sure Your Payment Cards</button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -332,14 +360,36 @@
                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                                 <div class="media-body order-2 order-lg-1">
                                     <h5 class="mt-0 font-weight-bold mb-2">
-                                        @Model.SumPay $ Of
-                                        @if (Model.SumDiscount != 0)
+                                        @*@Model.SumPay $ Of
+        @if (Model.SumDiscount != 0)
+        {
+            <span>@Model.SumDiscount $</span>
+        }
+        else
+        {
+            <span>@Model.Course.Course.Price $</span>
+        }*@
+                                        @*@Model.ApplicationUser.PayCard.Where(a => a.PayLog.Any(p => !p.Status && p.IdCourseSection == Model.)).Sum(a => a.PayLog.Where(p => !p.Status && p.IdCourseSection == Model.Course_Trainee.IdCourseSections).Sum(p => p.Value)) $ Of*@
+
+                                        @Model.Course.PayLog.Sum(a=>a.Value) $ Of
+                                        @if (Model.Course.Course.DiscountPrice.Any(a => a.EndDate > Model.ApplicationUser.Course_Trainee.FirstOrDefault(c => c.CourseSections.Id == Model.Course.Id).Date
+&& a.StartDate < Model.ApplicationUser.Course_Trainee.FirstOrDefault(c => c.CourseSections.Id == Model.Course.Id).Date))
                                         {
-                                            <span>@Model.SumDiscount $</span>
+                                            {
+                                                var Dis = Model.Course.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue;
+                                                var value = Convert.ToDouble(Model.Course.Course.Price) - Dis / 100 * (Convert.ToDouble(Model.Course.Course.Price));
+                                                <span>
+                                                    @Model.Course.Course.Price $ @Dis % => @value $
+
+                                                </span>
+                                            }
                                         }
                                         else
                                         {
-                                            <span>@Model.Course.Course.Price $</span>
+                                            <span>
+                                                @Model.Course.Course.Price $
+
+                                            </span>
                                         }
                                     </h5>
                             </div>

@@ -1,11 +1,11 @@
 ﻿@model Ethink.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "DetailsApplicationUser";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Private_Layout.cshtml";
 }
 
-@*<h2>DetailsApplicationUser</h2>
+@*<h2>Details</h2>
 
     <div>
         <h4>ApplicationUser</h4>
@@ -120,15 +120,6 @@
 
 
 
-
-
-
-
-
-<link rel="stylesheet" href="~/Content/Profile/Css.css" />
-
-
-
 <div class="container">
     <div class="main-body">
 
@@ -139,11 +130,11 @@
                         <div class="d-flex flex-column align-items-center text-center">
                             @if (Model.ImageName == "")
                             {
-                                <img src="~/Content/AdminPage/Image/online-course.png" class="rounded-circle" width="150" height="150">
+                                <img src="~/Content/AdminPage/Image/online-course.png" alt="Admin" class="rounded-circle" width="150" height="150">
                             }
                             else
                             {
-                                <img src="~/Assets/Users/@Model.ImageName" class="rounded-circle" width="150" height="150">
+                                <img src="~/Assets/Users/@Model.ImageName" alt="Admin" class="rounded-circle" width="150" height="150">
                             }
                             <div class="mt-3">
                                 <h4>@Model.UserName</h4>
@@ -199,6 +190,7 @@
                             </div>
                         </div>
                         <hr />
+
                     </div>
 
 
@@ -214,92 +206,95 @@
 
 
 
+@if (Model.Course_Trainee.Any())
+{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container">
-    <div class="main-body">
-
-        <div class="row gutters-sm">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-1">
-                            </div>
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Name</h6>
-                            </div>
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Number</h6>
-                            </div>
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Trainer</h6>
-                            </div>
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Payments</h6>
-                            </div>
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Financial Report</h6>
-                            </div>
-                            <div class="col-sm-1">
-                            </div>
-                        </div>
-                        <hr />
-                        @foreach (var item in Model.Course_Trainee)
-                        {
-
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-1">
+                                <div class="col-sm-2">
+                                    <h6 class="mb-0"></h6>
                                 </div>
                                 <div class="col-sm-2">
-                                    @item.CourseSections.Course.Name
+                                    <h6 class="mb-0">Name</h6>
                                 </div>
                                 <div class="col-sm-2">
-                                    @item.CourseSections.Number
+                                    <h6 class="mb-0">Number</h6>
                                 </div>
                                 <div class="col-sm-2">
-                                    @item.CourseSections.Employee.ApplicationUser.NickName
+                                    <h6 class="mb-0">Start Date</h6>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Model.PayCard.Sum(a => a.PayLog.Where(p => p.CourseSections == item.CourseSections).Sum(v => v.Value)) $
-                                    Of 
-                                    @{ 
-                                        if(item.CourseSections.Course.DiscountPrice.Any(a=>a.StartDate < item.Date &&  a.EndDate > item.Date))
-                                        {
-                                            var Dis = item.CourseSections.Course.DiscountPrice
-                                                .Where(a => a.StartDate < item.Date && a.EndDate > item.Date).OrderBy(a => a.EndDate).Last().DiscountValue;
-                                            var value = Convert.ToDouble(item.CourseSections.Course.Price) - (Convert.ToDouble(item.CourseSections.Course.Price) * (Dis / 100));
-                                            <span> @Dis  % => @value $</span>
-                                        }else
-                                        {
-                                <span>@item.CourseSections.Course.Price $</span>
-                                        }
-                                    }
+                                    <h6 class="mb-0">End Date</h6>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a href="@Url.Action("FinancialReportTreainee", new { id = item.Id })" class="btn btn-info btn-lg btn-block">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-sm-1">
+                                    <h6 class="mb-0">Price</h6>
                                 </div>
                             </div>
                             <hr />
-                        }
+
+                            @foreach (var item in Model.Course_Trainee)
+                            {
+                        <div class="row">
+                            <div class="col-sm-2">
+                                @if (item.CourseSections.Course.Image == "")
+                                {
+                                    <img src="~/Content/AdminPage/Image/online-course.png" style="height:70px; width:70px;border-radius: 1pc;">
+                                }
+                                else
+                                {
+                                    <img src="~/Assets/Courses/@item.CourseSections.Course.Image" style="height:70px; width:70px;border-radius: 1pc;">
+                                }
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">@item.CourseSections.Course.Name</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">@item.CourseSections.Number</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">@item.CourseSections.Course.StartDate</h6>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0">@item.CourseSections.Course.EndDate</h6>
+                            </div>
+                            <div class="col-sm-1">
+                                <h6 class="mb-0">
+                                    @{
+                                        if (item.CourseSections.Course.DiscountPrice.Any(a => a.StartDate < item.Date && a.EndDate > item.Date))
+                                        {
+                                            var Dis = item.CourseSections.Course.DiscountPrice
+                                                .Where(a => a.StartDate < item.Date && a.EndDate > item.Date).OrderBy(a => a.EndDate).Last().DiscountValue;
+                                            var value = Convert.ToDouble(item.CourseSections.Course.Price) - Convert.ToDouble(item.CourseSections.Course.Price) * (Dis / 100);
+                                            <span> @Dis % => @value $</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.CourseSections.Course.Price $</span>
+                                        }
+                                    }
+
+                                </h6>
+                            </div>
+                            <div class="col-sm-1">
+                                <a href="@Url.Action("DetailsTrainee","Admin",new { id = Model.Id,idCourseSection = item.Id })" class="btn btn-info">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                                <hr />
+                            }
+
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -307,7 +302,36 @@
         </div>
 
     </div>
-</div>
+
+
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block">Not Have Courses</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
 
 
 

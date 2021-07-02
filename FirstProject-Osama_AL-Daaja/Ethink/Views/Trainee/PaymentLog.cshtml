@@ -82,7 +82,7 @@
 <div class="container py-5">
     <div class="row text-center text-white mb-5">
         <div class="col-lg-7 mx-auto">
-            <h1 class="display-4">Requests</h1>
+            <h1 class="display-4">Payment</h1>
         </div>
     </div>
 
@@ -101,7 +101,7 @@
                                         Value :
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @type = "decimal", @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

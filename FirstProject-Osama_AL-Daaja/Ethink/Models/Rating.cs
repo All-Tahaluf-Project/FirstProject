@@ -12,7 +12,7 @@ namespace Ethink.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Assess
+    public partial class Rating
     {
         public int Id { get; set; }
         public int IdTrainee { get; set; }

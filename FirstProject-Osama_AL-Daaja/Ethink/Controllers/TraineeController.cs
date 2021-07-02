@@ -17,13 +17,13 @@ namespace Ethink.Controllers
     {
         private Context _context = new Context();
         // GET: Trainee
-        public ActionResult Index(int?Id,string Name,string StatusTestimonial)
+        public ActionResult Index(int?Id,string Name,string StatusTestimonial,bool? AllDiscount)
         {
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             var Course = new List<Course>();
             DTOTraineePage dTOTraineePage = new DTOTraineePage();
 
-            if (Id != 0)
+            if (Id != 0 && Id != null)
             {
                 Course = _context.Course.Include(a => a.DiscountPrice).Where(a => a.EndDate > DateTime.Now && a.IdCategory == Id).Take(20).ToList();
             }
@@ -31,6 +31,14 @@ namespace Ethink.Controllers
             if (Name != null)
             {
                 Course = _context.Course.Include(a => a.DiscountPrice).Where(a => a.EndDate > DateTime.Now && a.Name.Contains(Name)).Take(20).ToList();
+            }
+
+            if (AllDiscount != null && AllDiscount == true)
+            {
+                Course = _context.Course.Include(a => a.DiscountPrice).Where(a =>
+                a.DiscountPrice.Any(d => d.EndDate >= DateTime.Now) &&
+                 a.EndDate >= DateTime.Now).Take(20).ToList();
+                //Course = _context.Course.Include(a => a.DiscountPrice).ToList();
             }
 
             dTOTraineePage.Courses = Course;
@@ -94,7 +102,8 @@ namespace Ethink.Controllers
         public ActionResult DetailsMyCourse(int? id)
         {
             var Course_Trainee = _context.Course_Trainee.Include(a => a.CourseSections.PayLog)
-    .Include(a => a.CourseSections.Course).Include(a => a.CourseSections.Materials).FirstOrDefault(a => a.CourseSections.Id == id);
+    .Include(a => a.CourseSections.Course).Include(a => a.CourseSections.Materials)
+    .Include(a => a.CourseSections.Exam).FirstOrDefault(a => a.CourseSections.Id == id);
             //var CourseSection = _context.CourseSections.Include(a=>a.PayLog)
             //    .Include(a=>a.Course).Include(a=>a.Materials).FirstOrDefault(a => a.Id == id);
 
@@ -111,28 +120,29 @@ namespace Ethink.Controllers
 
             Course_Trainee.CourseSections.PayLog = Course_Trainee.CourseSections.PayLog.Where(p => p.PayCard.ApplicationUser.UserName == User.Identity.Name).ToList();
 
-            var SumPay = Course_Trainee.CourseSections.PayLog.Where(a => !a.Status).Sum(a => a.Value);
-            var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
-                .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
+            //var SumPay = Course_Trainee.CourseSections.PayLog.Where(a => !a.Status).Sum(a => a.Value);
+            //var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
+            //    .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
 
-            decimal Dis = 0;
+            //decimal Dis = 0;
 
-            if(Discount != null)
-            {
-                Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
-            }
+            //if(Discount != null)
+            //{
+            //    Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
+            //}
 
-            var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            var ApplicationUser = _context.ApplicationUser.Include(a=>a.TraineeExam)
+                .FirstOrDefault(a => a.UserName == User.Identity.Name);
 
             DTOCourseSection dTOCourseSection = new DTOCourseSection()
             {
-                SumPay = SumPay,
-                SumDiscount = Dis,
+                //SumPay = SumPay,
+                //SumDiscount = Dis,
                 Course = Course_Trainee.CourseSections,
                 Exam = _context.Exam.Where(a => a.CourseSections.Id == Course_Trainee.CourseSections.Id && a.FullMark <= a.Questions.Sum(q=>q.Mark)).ToList(),
                 MaterialsVideo = MaterialsVideo,
                 MaterialsDoc = MaterialsDoc,
-                ApplicationUser = ApplicationUser
+                ApplicationUser = ApplicationUser,
             };
 
             return View(dTOCourseSection);
@@ -250,7 +260,7 @@ a.IdTrainee == _context.ApplicationUser.FirstOrDefault(u => u.UserName == User.I
                 IdCourseSection = CourseSection.Id,
             };
 
-            ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name");
+            ViewBag.IdCard = new SelectList(_context.PayCard.Where(a=>a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
             return View(NewPayLog);
         }
 
@@ -262,64 +272,103 @@ a.IdTrainee == _context.ApplicationUser.FirstOrDefault(u => u.UserName == User.I
 
             if (ModelState.IsValid)
             {
-                var Card = _context.PayCard.FirstOrDefault(a => a.Id == model.IdCard);
+                var Card = _context.PayCard.Include(a=>a.ApplicationUser.Course_Trainee).FirstOrDefault(a => a.Id == model.IdCard);
+                
+                if (Card == null)
+                {
+                    ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
+                    ViewBag.Status = "Make Sure Your Card.";
+                    return View(model);
+                }
 
+
+                decimal MyValue = 0;
                 if (model.Value <= 0)
                 {
-                    ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name", model.IdCard);
+                    ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
                     ViewBag.Status = "Value Should Be More Than 0.";
                     return View(model);
+                }else
+                {
+                    MyValue = model.Value;
                 }
 
-                if (!(AesOperation.DecryptString(Card.CardCode) == model.Code))
+                var CourseTrainee = Card.ApplicationUser.Course_Trainee.FirstOrDefault(a=>a.IdCourseSections == model.IdCourseSection);
+                var Sum = Card.PayLog.Where(p => !p.Status && p.IdCourseSection == model.IdCourseSection).Sum(a => a.Value);
+
+                var CourseSection = _context.CourseSections.FirstOrDefault(a => a.Id == model.IdCourseSection);
+                decimal Price = 0;
+                if (CourseSection.Course.DiscountPrice.Any(a=>a.StartDate < CourseTrainee.Date && a.EndDate > CourseTrainee.Date))
                 {
-                    ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name", model.IdCard);
-                    ViewBag.Status = "Your Code Is Incorrect.";
+                    //Price = Convert.ToDouble(CourseSection.Course.Price);
+                    Price = CourseSection.Course.Price;
+                    Price = Price -  (Price *(Convert.ToDecimal( CourseSection
+                        .Course.DiscountPrice.Where(a => a.StartDate < CourseTrainee.Date && a.EndDate > CourseTrainee.Date)
+                        .OrderBy(a => a.EndDate).Last().DiscountValue / 100) ));
+                }else
+                {
+                    //                    Price = Convert.ToDouble(CourseSection.Course.Price);
+                    Price = CourseSection.Course.Price;
+                }
+
+                if (model.Value <= (Price - Sum))
+                {
+
+                    if (!(AesOperation.DecryptString(Card.CardCode) == model.Code))
+                    {
+                        ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
+                        ViewBag.Status = "Your Code Is Incorrect.";
+                        return View(model);
+                    }
+
+                    if (Card.Total < Convert.ToDecimal(model.Value) && !model.Status)
+                    {
+                        ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
+                        ViewBag.Status = "Your Money Is Not Enough.";
+                        return View(model);
+                    }
+
+                    if (model.IdCourseSection == 0 || model.IdCourseSection == null)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    if (!model.Status)
+                    {
+                        Card.Total -= model.Value;
+                    }
+
+                    model.Date = DateTime.Now;
+                    if(MyValue == 0)
+                    {
+                        ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
+                        ViewBag.Status = "equal 0";
+                        return View(model);
+                    }
+                    var payLog = new PayLog()
+                    {
+                        IdCard = model.IdCard,
+                        Date = model.Date,
+                        IdCourseSection = model.IdCourseSection,
+                        Status = model.Status,
+                        Value = MyValue,
+                    };
+
+                    _context.Entry(Card).State = EntityState.Modified;
+                    _context.PayLog.Add(payLog);
+                    _context.SaveChanges();
+                    return RedirectToAction("DetailsMyCourse", new { id = payLog.IdCourseSection });
+                }
+                else
+                {
+
+                    ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
+                    ViewBag.Status = $"Make Sure Enter Value Less Or Equal  Than { Price - Sum}";
                     return View(model);
                 }
-
-                if(Card == null) 
-                {
-                    ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name", model.IdCard);
-                    ViewBag.Status = "Make Sure Your Card.";
-                    return View(model); 
-                }
-
-                if(Card.Total < Convert.ToDecimal(model.Value) && !model.Status)
-                {
-                    ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name", model.IdCard);
-                    ViewBag.Status = "Your Money Is Not Enough.";
-                    return View(model);
-                }
-
-                if (model.IdCourseSection == 0 || model.IdCourseSection == null)
-                {
-                    return RedirectToAction("Index");
-                }
-
-                if (!model.Status)
-                {
-                    Card.Total -= Convert.ToDecimal(model.Value);
-                }
-
-                model.Date = DateTime.Now;
-
-                var payLog = new PayLog()
-                {
-                    IdCard = model.IdCard,
-                    Date = model.Date,
-                    IdCourseSection = model.IdCourseSection,
-                    Status = model.Status,
-                    Value = Convert.ToDecimal(model.Value),
-                };
-
-                _context.Entry(Card).State = EntityState.Modified;
-                _context.PayLog.Add(payLog);
-                _context.SaveChanges();
-                return RedirectToAction("DetailsMyCourse",new { id = payLog.IdCourseSection});
             }
 
-            ViewBag.IdCard = new SelectList(_context.PayCard, "Id", "Name", model.IdCard);
+            ViewBag.IdCard = new SelectList(_context.PayCard.Where(a => a.ApplicationUser.UserName == User.Identity.Name), "Id", "Name");
             return View(model);
         }
 

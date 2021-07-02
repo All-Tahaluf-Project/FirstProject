@@ -19,15 +19,6 @@
           <Property Name="NickName" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Assess">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdTrainee" Type="int" Nullable="false" />
-          <Property Name="IdCourseSections" Type="int" Nullable="false" />
-          <Property Name="Value" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -136,7 +127,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="6" Nullable="false" />
           <Property Name="CardCode" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdTrainee" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
@@ -146,7 +137,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Value" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="6" Nullable="false" />
           <Property Name="IdCard" Type="int" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="IdCourseSection" Type="int" />
@@ -158,7 +149,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdEmployee" Type="int" Nullable="false" />
-          <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="6" />
           <Property Name="Date" Type="date" />
         </EntityType>
         <EntityType Name="Questions">
@@ -169,6 +160,15 @@
           <Property Name="IdExam" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="Mark" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTrainee" Type="int" Nullable="false" />
+          <Property Name="IdCourseSections" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestRegister">
           <Key>
@@ -232,24 +232,24 @@
         </EntityType>
         <Association Name="FK_Assess_ApplicationUser">
           <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
-          <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Assess">
+            <Dependent Role="Rating">
               <PropertyRef Name="IdTrainee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Assess_CourseSections">
           <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
-          <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CourseSections">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Assess">
+            <Dependent Role="Rating">
               <PropertyRef Name="IdCourseSections" />
             </Dependent>
           </ReferentialConstraint>
@@ -568,7 +568,6 @@
         </Association>
         <EntityContainer Name="FirstProjectTahalufModelStoreContainer">
           <EntitySet Name="ApplicationUser" EntityType="Self.ApplicationUser" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Assess" EntityType="Self.Assess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Certificates" EntityType="Self.Certificates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
@@ -584,6 +583,7 @@
           <EntitySet Name="PayLog" EntityType="Self.PayLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaySalary" EntityType="Self.PaySalary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestRegister" EntityType="Self.RequestRegister" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solutions" EntityType="Self.Solutions" Schema="dbo" store:Type="Tables" />
@@ -593,11 +593,11 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Assess_ApplicationUser" Association="Self.FK_Assess_ApplicationUser">
             <End Role="ApplicationUser" EntitySet="ApplicationUser" />
-            <End Role="Assess" EntitySet="Assess" />
+            <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
           <AssociationSet Name="FK_Assess_CourseSections" Association="Self.FK_Assess_CourseSections">
             <End Role="CourseSections" EntitySet="CourseSections" />
-            <End Role="Assess" EntitySet="Assess" />
+            <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
           <AssociationSet Name="FK_Certificates_ApplicationUser" Association="Self.FK_Certificates_ApplicationUser">
             <End Role="ApplicationUser" EntitySet="ApplicationUser" />
@@ -722,7 +722,7 @@
           <Property Name="Block" Type="Boolean" Nullable="false" />
           <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Assess" Relationship="Self.FK_Assess_ApplicationUser" FromRole="ApplicationUser" ToRole="Assess" />
+          <NavigationProperty Name="Rating" Relationship="Self.FK_Assess_ApplicationUser" FromRole="ApplicationUser" ToRole="Rating" />
           <NavigationProperty Name="Certificates" Relationship="Self.FK_Certificates_ApplicationUser" FromRole="ApplicationUser" ToRole="Certificates" />
           <NavigationProperty Name="Course_Trainee" Relationship="Self.FK_Course_Trainee_ApplicationUser" FromRole="ApplicationUser" ToRole="Course_Trainee" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Users" FromRole="ApplicationUser" ToRole="Employee" />
@@ -730,17 +730,6 @@
           <NavigationProperty Name="RequestRegister" Relationship="Self.FK_RequestRegister_ApplicationUser" FromRole="ApplicationUser" ToRole="RequestRegister" />
           <NavigationProperty Name="TraineeExam" Relationship="Self.FK_TraineeExam_ApplicationUser" FromRole="ApplicationUser" ToRole="TraineeExam" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK_UserRole_Users" FromRole="ApplicationUser" ToRole="UserRole" />
-        </EntityType>
-        <EntityType Name="Assess">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdTrainee" Type="Int32" Nullable="false" />
-          <Property Name="IdCourseSections" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_Assess_ApplicationUser" FromRole="Assess" ToRole="ApplicationUser" />
-          <NavigationProperty Name="CourseSections" Relationship="Self.FK_Assess_CourseSections" FromRole="Assess" ToRole="CourseSections" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -806,10 +795,10 @@
           <Property Name="IdCourse" Type="Int32" Nullable="false" />
           <Property Name="MaxCount" Type="Int32" Nullable="false" />
           <Property Name="IdTrainer" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Assess" Relationship="Self.FK_Assess_CourseSections" FromRole="CourseSections" ToRole="Assess" />
           <NavigationProperty Name="Certificates" Relationship="Self.FK_Certificates_CourseSections" FromRole="CourseSections" ToRole="Certificates" />
           <NavigationProperty Name="Course" Relationship="Self.FK_CourseSections_Course" FromRole="CourseSections" ToRole="Course" />
           <NavigationProperty Name="Course_Trainee" Relationship="Self.FK_Course_Trainee_CourseSections" FromRole="CourseSections" ToRole="Course_Trainee" />
+          <NavigationProperty Name="Rating" Relationship="Self.FK_Assess_CourseSections" FromRole="CourseSections" ToRole="Rating" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_CourseSections_Employee" FromRole="CourseSections" ToRole="Employee" />
           <NavigationProperty Name="Exam" Relationship="Self.FK_Exam_CourseSections" FromRole="CourseSections" ToRole="Exam" />
           <NavigationProperty Name="Materials" Relationship="Self.FK_Materials_CourseSections" FromRole="CourseSections" ToRole="Materials" />
@@ -878,7 +867,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
           <Property Name="CardCode" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdTrainee" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -890,7 +879,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Value" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
           <Property Name="IdCard" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdCourseSection" Type="Int32" />
@@ -904,7 +893,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdEmployee" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="6" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_PaySalary_Employee" FromRole="PaySalary" ToRole="Employee" />
         </EntityType>
@@ -919,6 +908,17 @@
           <NavigationProperty Name="Exam" Relationship="Self.FK_Questions_Exam" FromRole="Questions" ToRole="Exam" />
           <NavigationProperty Name="HistorySolutions" Relationship="Self.FK_HistorySolutions_Questions" FromRole="Questions" ToRole="HistorySolutions" />
           <NavigationProperty Name="Solutions" Relationship="Self.FK_Solutions_Questions" FromRole="Questions" ToRole="Solutions" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTrainee" Type="Int32" Nullable="false" />
+          <Property Name="IdCourseSections" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_Assess_ApplicationUser" FromRole="Rating" ToRole="ApplicationUser" />
+          <NavigationProperty Name="CourseSections" Relationship="Self.FK_Assess_CourseSections" FromRole="Rating" ToRole="CourseSections" />
         </EntityType>
         <EntityType Name="RequestRegister">
           <Key>
@@ -992,12 +992,12 @@
         </EntityType>
         <Association Name="FK_Assess_ApplicationUser">
           <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
-          <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ApplicationUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Assess">
+            <Dependent Role="Rating">
               <PropertyRef Name="IdTrainee" />
             </Dependent>
           </ReferentialConstraint>
@@ -1086,18 +1086,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Assess_CourseSections">
-          <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
-          <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CourseSections">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Assess">
-              <PropertyRef Name="IdCourseSections" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Course_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Course" Type="Self.Course" Multiplicity="*" />
@@ -1154,6 +1142,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Course_Trainee">
+              <PropertyRef Name="IdCourseSections" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assess_CourseSections">
+          <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseSections">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rating">
               <PropertyRef Name="IdCourseSections" />
             </Dependent>
           </ReferentialConstraint>
@@ -1328,7 +1328,6 @@
         </Association>
         <EntityContainer Name="Context" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ApplicationUser" EntityType="Self.ApplicationUser" />
-          <EntitySet Name="Assess" EntityType="Self.Assess" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Certificates" EntityType="Self.Certificates" />
           <EntitySet Name="ContactUs" EntityType="Self.ContactUs" />
@@ -1344,6 +1343,7 @@
           <EntitySet Name="PayLog" EntityType="Self.PayLog" />
           <EntitySet Name="PaySalary" EntityType="Self.PaySalary" />
           <EntitySet Name="Questions" EntityType="Self.Questions" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" />
           <EntitySet Name="RequestRegister" EntityType="Self.RequestRegister" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Solutions" EntityType="Self.Solutions" />
@@ -1353,7 +1353,7 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" />
           <AssociationSet Name="FK_Assess_ApplicationUser" Association="Self.FK_Assess_ApplicationUser">
             <End Role="ApplicationUser" EntitySet="ApplicationUser" />
-            <End Role="Assess" EntitySet="Assess" />
+            <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
           <AssociationSet Name="FK_Certificates_ApplicationUser" Association="Self.FK_Certificates_ApplicationUser">
             <End Role="ApplicationUser" EntitySet="ApplicationUser" />
@@ -1383,10 +1383,6 @@
             <End Role="ApplicationUser" EntitySet="ApplicationUser" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
-          <AssociationSet Name="FK_Assess_CourseSections" Association="Self.FK_Assess_CourseSections">
-            <End Role="CourseSections" EntitySet="CourseSections" />
-            <End Role="Assess" EntitySet="Assess" />
-          </AssociationSet>
           <AssociationSet Name="FK_Course_Categories" Association="Self.FK_Course_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Course" EntitySet="Course" />
@@ -1406,6 +1402,10 @@
           <AssociationSet Name="FK_Course_Trainee_CourseSections" Association="Self.FK_Course_Trainee_CourseSections">
             <End Role="CourseSections" EntitySet="CourseSections" />
             <End Role="Course_Trainee" EntitySet="Course_Trainee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assess_CourseSections" Association="Self.FK_Assess_CourseSections">
+            <End Role="CourseSections" EntitySet="CourseSections" />
+            <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseSections_Employee" Association="Self.FK_CourseSections_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -1482,16 +1482,6 @@
                 <ScalarProperty Name="Block" ColumnName="Block" />
                 <ScalarProperty Name="NickName" ColumnName="NickName" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Assess">
-            <EntityTypeMapping TypeName="FirstProjectTahalufModel.Assess">
-              <MappingFragment StoreEntitySet="Assess">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdTrainee" ColumnName="IdTrainee" />
-                <ScalarProperty Name="IdCourseSections" ColumnName="IdCourseSections" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1649,6 +1639,16 @@
                 <ScalarProperty Name="IdExam" ColumnName="IdExam" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Mark" ColumnName="Mark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rating">
+            <EntityTypeMapping TypeName="FirstProjectTahalufModel.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdTrainee" ColumnName="IdTrainee" />
+                <ScalarProperty Name="IdCourseSections" ColumnName="IdCourseSections" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,186 @@
+﻿@model IEnumerable<Ethink.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Private_Layout.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/Table/css/style.css">
+<link rel="stylesheet" href="~/Content/Profile/Css.css" />
+
+
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">Trainees List</h2>
+            </div>
+        </div>
+
+
+
+
+        <div class="container">
+            <div class="main-body">
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <div class="search">
+                            @using (Html.BeginForm("Index", "Trainees", FormMethod.Get))
+                            {
+                                @Html.Editor("UserName", new { htmlAttributes = new { @style = "width : 100%", @type = "text", @class = "search-input", placeholder = "UserName" } })
+                                <button type="submit" class="search-icon"><i class="fa fa-search"></i></button>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                        <div class="search">
+                            @using (Html.BeginForm("Index", "Trainees", FormMethod.Get))
+                            {
+                                @Html.Editor("Email", new { htmlAttributes = new { @style = "width : 100%", @type = "email", @class = "search-input", placeholder = "Email" } })
+                                <button type="submit" class="search-icon"><i class="fa fa-search"></i></button>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                        @using (Html.BeginForm("Index", "Trainees", FormMethod.Get))
+                        {
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="search">
+                                    @Html.Editor("Date", new { htmlAttributes = new { @style = "width : 100%", @type = "date", @class = "search-input", placeholder = "Email" } })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-wrap">
+                    <table class="table table-responsive-xl">
+                        <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Info</th>
+                                <th>Nickname</th>
+                                <th>Block</th>
+                                <th>Gender</th>
+                                <th>Edit</th>
+                                <th>Details</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr class="alert" role="alert">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td class="d-flex align-items-center" style="height: 9pc;">
+                                        <div class="img" style="background-image: url(~/Assets/Courses/Trainer/@item.ImageName);"></div>
+                                        <div class="pl-3 email">
+                                            <span>@item.Email</span>
+                                            <span>@item.PhoneNumber</span>
+                                        </div>
+                                    </td>
+                                    <td>@item.NickName</td>
+                                    <td>
+                                        @if (item.Block)
+                                        {
+                                            <a href="@Url.Action("Block",new { id = item.Id })" class="btn btn-danger">
+                                                <i class="fas fa-lock"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Block",new { id = item.Id })" class="btn btn-success">
+                                                <i class="fas fa-lock-open"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Gender)
+                                        {
+                                            <i class="fas fa-male"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-female"></i>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.Action("Edit",new { id = item.Id })" class="btn btn-success">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("Details",new { id = item.Id })" class="btn btn-primary">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id },
+new { style = "margin:10px", @class = "btn btn-danger", onclick = "return confirm('Are You Sure.');" })
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

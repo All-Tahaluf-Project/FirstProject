@@ -7,8 +7,9 @@ using System.Web;
 
 namespace Ethink.Models.Input_Model
 {
-    public class IN_RegisterTrainee
+    public class IN_ConfirmEmail
     {
+
         [Required]
         [DisplayName("UserName")]
         public string UserName { get; set; }
@@ -31,5 +32,16 @@ namespace Ethink.Models.Input_Model
         public bool Gender { get; set; }
 
 
+
+
+
+
+
+
+
+
+
+        public string CodeEmail { get; set; }
+        public string CodeConfirm { get; set; }
     }
 }

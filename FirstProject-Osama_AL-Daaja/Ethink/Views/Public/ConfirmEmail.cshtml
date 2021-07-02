@@ -1,0 +1,54 @@
+﻿@model Ethink.Models.Input_Model.IN_ConfirmEmail
+
+@{
+    ViewBag.Title = "ConfirmCode";
+    Layout = "~/Views/Shared/_Public_Layout.cshtml";
+}
+
+<img src="/Content/Public_Layout/images/pexels-skitterphoto-1005324.jpg" class="bg">
+
+
+<div class=" row " id="top">
+    <div class="col md 2">
+    </div>
+
+    <div class="col-md-8 Form">
+        <h3>Register</h3>
+        <img class="img" src="/Content/Public_Layout/images/education (1).png">
+        We Send Email For You
+        <br>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(a => a.CodeEmail);
+            @Html.HiddenFor(a => a.Email);
+            @Html.HiddenFor(a => a.Gender);
+            @Html.HiddenFor(a => a.NickName);
+            @Html.HiddenFor(a => a.Password);
+            @Html.HiddenFor(a => a.PhoneNumber);
+            @Html.HiddenFor(a => a.UserName);
+
+            @Html.EditorFor(model => model.CodeConfirm, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirm Code" } })
+            @Html.ValidationMessageFor(model => model.CodeConfirm, "", new { @class = "text-danger" })
+            <br />
+            <div style="color:red">
+                @ViewBag.Status
+            </div>
+
+            <div class="form-button mt-3">
+                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-2">
+
+    </div>
+
+
+</div>
+
+
+
+
+

@@ -5,56 +5,6 @@
     Layout = "~/Views/Shared/_Private_Layout.cshtml";
 }
 
-@*<h2>Details</h2>
-
-    <div>
-        <h4>PayCard</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Total)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Total)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CardCode)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CardCode)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ApplicationUser.UserName)
-            </dd>
-
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -97,6 +47,11 @@
                             }
                             <div class="mt-3">
                                 <h4>@Model.Total $</h4>
+                            </div>
+                            <div class="col-12" style="text-align:center">
+                                <a href="@Url.Action("Index")" class="btn btn-danger">
+                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

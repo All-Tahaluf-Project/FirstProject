@@ -16,7 +16,7 @@ namespace Ethink.Models.Input_Model
 
         public int Id { get; set; }
         [Required]
-        public double Value { get; set; }
+        public decimal Value { get; set; }
         [Required]
         public int IdCard { get; set; }
         [Required]

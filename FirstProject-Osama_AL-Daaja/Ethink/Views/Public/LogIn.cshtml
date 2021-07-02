@@ -52,7 +52,12 @@
 
     <p style="color: red; font-size: 3pc;">
         @ViewBag.Status
-
+        @if (ViewBag.Status == "Password Is Incorrect")
+                {
+        <a href="@Url.Action("ConfirmPassword",new { Name = Model.UserName})">
+            @ViewBag.RefundPassword
+        </a>
+                }
     </p>
         <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Log In</button>

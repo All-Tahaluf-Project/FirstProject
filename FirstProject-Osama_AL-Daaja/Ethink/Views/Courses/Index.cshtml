@@ -104,7 +104,20 @@
                                         @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
                                     <td>
+                                        @if (item.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
+                                        {
+                                            //var value = *((item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue) , Convert.ToDouble(item.CourseSections.Course.Price));
+
+                                            <span>
+                                                    @item.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                                @(Convert.ToDouble(item.Price) - ((item.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(item.Price)))
+                                                $
+                                            </span>
+                                        }
+                                        else
+                                        {
                                         @Html.DisplayFor(modelItem => item.Price)
+                                        }
                                     </td>
                                     <td>
                                         <a href="@Url.Action("Edit",new { id = item.Id })" class="btn btn-success">

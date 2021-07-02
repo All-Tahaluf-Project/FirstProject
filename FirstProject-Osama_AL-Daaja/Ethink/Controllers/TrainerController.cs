@@ -24,30 +24,39 @@ namespace Ethink.Controllers
 
             if (Start == null || End == null)
             {
-                var S = DateTime.Now;
-                DTO.CountCourseSection = _context.CourseSections.Count(a =>  a.IdTrainer == MyAccount.Id && a.Course.EndDate > DateTime.Now);
+                var CourseSection = _context.CourseSections.Include(a=>a.Exam).Where(a => a.IdTrainer == MyAccount.Id);
+
+                DTO.CountCourseSection = CourseSection.Count(a => a.Course.EndDate > DateTime.Now);
                 DTO.CountCourseSectionMaleTrainee = _context.Course_Trainee.Count(a => a.ApplicationUser.Gender && a.CourseSections.Course.EndDate > DateTime.Now && a.CourseSections.IdTrainer == MyAccount.Id);
                 DTO.CountCourseSectionFemaleTrainee = _context.Course_Trainee.Count(a => !a.ApplicationUser.Gender && a.CourseSections.Course.EndDate > DateTime.Now && a.CourseSections.IdTrainer == MyAccount.Id);
 
-
-                DTO.SumOfMarks = _context.CourseSections.Where(a=>a.IdTrainer == MyAccount.Id).Sum(a => a.Exam.Sum(e => e.TraineeExam.Sum(m => m.Mark)));
-                DTO.SumOfTotalMarks = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id).Sum(a => a.Exam.Sum(e => e.FullMark));
-                DTO.SumOfAVG = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id).Sum(a => a.Exam.Average(e => e.TraineeExam.Sum(m => m.Mark)));
-                DTO.MaxMark = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id).Max(a => a.Exam.Max(m => m.TraineeExam.Max(e => e.Mark)));
-                DTO.MinMark = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id).Min(a => a.Exam.Min(m => m.TraineeExam.Min(e => e.Mark)));
+                if (CourseSection.Where(a=>a.Course.EndDate > DateTime.Now).Any(a => a.Exam.Any(t => t.TraineeExam.Any())))
+                {
+                    DTO.SumOfMarks = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Sum(a => a.Exam.Where(e => e.TraineeExam.Any()).Sum(e => e.TraineeExam.Sum(m => m.Mark)));
+                    DTO.SumOfTotalMarks = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Sum(a => a.Exam.Sum(e => e.FullMark));
+                    DTO.SumOfAVG = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Sum(a => a.Exam.Average(e => e.TraineeExam.Sum(m => m.Mark)));
+                    DTO.MaxMark = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Max(a => a.Exam.Max(m => m.TraineeExam.Max(e => e.Mark)));
+                    DTO.MinMark = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Min(a => a.Exam.Min(m => m.TraineeExam.Min(e => e.Mark)));
+                }
 
             }
             else
             {
-                DTO.CountCourseSection = _context.CourseSections.Count(a => a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End && a.IdTrainer == MyAccount.Id);
-                DTO.CountCourseSectionMaleTrainee = _context.Course_Trainee.Count(a => a.ApplicationUser.Gender && a.CourseSections.IdTrainer == MyAccount.Id);
-                DTO.CountCourseSectionFemaleTrainee = _context.Course_Trainee.Count(a => !a.ApplicationUser.Gender && a.CourseSections.IdTrainer == MyAccount.Id);
+                DTO.CountCourseSection = _context.CourseSections.Count(a => Start >= a.Course.StartDate && a.Course.EndDate >= End && a.IdTrainer == MyAccount.Id);
+                DTO.CountCourseSectionMaleTrainee = _context.Course_Trainee.Count(a => Start >= a.CourseSections.Course.StartDate && a.CourseSections.Course.EndDate >= End && a.ApplicationUser.Gender && a.CourseSections.IdTrainer == MyAccount.Id);
+                DTO.CountCourseSectionFemaleTrainee = _context.Course_Trainee.Count(a => Start >= a.CourseSections.Course.StartDate && a.CourseSections.Course.EndDate >= End && !a.ApplicationUser.Gender && a.CourseSections.IdTrainer == MyAccount.Id);
 
-                DTO.SumOfMarks = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id && a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End).Sum(a => a.Exam.Sum(e => e.TraineeExam.Sum(m => m.Mark)));
-                DTO.SumOfTotalMarks = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id && a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End).Sum(a => a.Exam.Sum(e => e.FullMark));
-                DTO.SumOfAVG = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id && a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End).Sum(a => a.Exam.Average(e => e.TraineeExam.Sum(m => m.Mark)));
-                DTO.MaxMark = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id && a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End).Max(a => a.Exam.Max(m => m.TraineeExam.Max(e => e.Mark)));
-                DTO.MinMark = _context.CourseSections.Where(a => a.IdTrainer == MyAccount.Id && a.Course.StartDate >= a.Course.StartDate && a.Course.EndDate <= End).Min(a => a.Exam.Min(m => m.TraineeExam.Min(e => e.Mark)));
+                var CourseSection = _context.CourseSections.Include(a => a.Exam).Where(a => Start >= a.Course.StartDate && a.Course.EndDate >= End 
+                && a.IdTrainer == MyAccount.Id);
+
+                if (CourseSection.Any(a => a.Exam.Any(t => t.TraineeExam.Any())))
+                {
+                    DTO.SumOfMarks = CourseSection.Sum(a => a.Exam.Sum(e => e.TraineeExam.Sum(m => m.Mark)));
+                    DTO.SumOfTotalMarks = CourseSection.Average(a => a.Exam.Average(e => e.FullMark));
+                    DTO.SumOfAVG = CourseSection.Average(a => a.Exam.Average(e => e.TraineeExam.Average(m => m.Mark)));
+                    DTO.MaxMark = CourseSection.Max(a => a.Exam.Max(m => m.TraineeExam.Max(e => e.Mark)));
+                    DTO.MinMark = CourseSection.Min(a => a.Exam.Min(m => m.TraineeExam.Min(e => e.Mark)));
+                }
             }
 
             return View(DTO);
@@ -92,7 +101,7 @@ namespace Ethink.Controllers
             DTOCourseSection dTOCourseSection = new DTOCourseSection()
             {
                 Course = CourseSection,
-                Course_Trainee = _context.Course_Trainee.Include(a => a.ApplicationUser).Where(a => a.CourseSections.Id == id).ToList(),
+                Course_Trainee = _context.Course_Trainee.Include(a => a.ApplicationUser).Where(a =>a.ApplicationUser.Id != -1 && a.CourseSections.Id == id).ToList(),
                 Exam = _context.Exam.Include(a=>a.Questions).Where(a=>a.CourseSections.Id == CourseSection.Id).ToList(),
                 MaterialsVideo = MaterialsVideo,
                 MaterialsDoc = MaterialsDoc,
@@ -180,20 +189,24 @@ namespace Ethink.Controllers
             return RedirectToAction("Create", "Exams", new { id = id });
         }
 
-
-        public ActionResult DetailsTraineeForTrainer(int? id)
+        public ActionResult DetailsTraineeForTrainer(int? id,int? IdCourse)
         {
 
-            var ApplicationUser = _context.ApplicationUser.Include(a=>a.TraineeExam).FirstOrDefault(a => a.Id == id);
+            var ApplicationUser = _context.ApplicationUser.Include(a => a.TraineeExam).FirstOrDefault(a => a.Id == id);
 
-            if(ApplicationUser == null)
+            if (ApplicationUser == null)
             {
                 return RedirectToAction("IndexCourses");
             }
 
+            if (IdCourse != null)
+            {
+                ApplicationUser.TraineeExam = ApplicationUser.TraineeExam.Where(a => a.Exam.CourseSections.Id == IdCourse).ToList();
+            }
 
             return View(ApplicationUser);
         }
+
 
         public ActionResult ChangeMark(int? idUser, int? idExam, string Mark)
         {
@@ -246,6 +259,22 @@ namespace Ethink.Controllers
         public ActionResult IndexPDF()
         {
             return new ActionAsPdf("Index")
+            {
+                FileName = "Index.pdf",
+                PageSize = Rotativa.Options.Size.A4,
+            };
+        }
+
+        public ActionResult DetailsTraineeForTrainerPdf(int? id)
+        {
+            var ApplicationUser = _context.ApplicationUser.Include(a => a.TraineeExam).FirstOrDefault(a => a.Id == id);
+
+            if(ApplicationUser == null)
+            {
+                return RedirectToAction("IndexCourses");
+            }
+
+            return new ActionAsPdf("DetailsTraineeForTrainer",new {id = ApplicationUser.Id })
             {
                 FileName = "Index.pdf",
                 PageSize = Rotativa.Options.Size.A4,

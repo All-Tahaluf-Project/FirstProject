@@ -78,8 +78,8 @@ namespace Ethink.Controllers.CRUD_Admin
 
         public ActionResult Delete(int? id)
         {
-            Employee employee = _context.Employee.Include(a=>a.PaySalary).Include(a=>a.CourseSections).FirstOrDefault(a=>a.Id == id);
-            var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == employee.IdUser);
+            Employee employee = _context.Employee.Include(a=>a.ApplicationUser.UserRole).Include(a=>a.PaySalary).Include(a=>a.CourseSections).FirstOrDefault(a=>a.Id == id);
+//            var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == employee.IdUser);
 
             if(employee.CourseSections.Any())
             {
@@ -88,8 +88,9 @@ namespace Ethink.Controllers.CRUD_Admin
 
             _context.PaySalary.RemoveRange(employee.PaySalary);
             _context.Employee.Remove(employee);
-            _context.ApplicationUser.Remove(ApplicationUser);
-            _context.UserRole.Remove(_context.UserRole.FirstOrDefault(a => a.IdUser == ApplicationUser.Id));
+            _context.ApplicationUser.Remove(employee.ApplicationUser);
+            _context.UserRole.RemoveRange(employee.ApplicationUser.UserRole);
+            _context.UserRole.Remove(_context.UserRole.FirstOrDefault(a => a.IdUser == a.ApplicationUser.Id));
             _context.SaveChanges();
 
             return RedirectToAction("Index");

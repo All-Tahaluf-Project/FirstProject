@@ -156,23 +156,23 @@ namespace Ethink.Controllers
             var SumPay = Course_Trainee.CourseSections.PayLog.Where(a => a.PayCard.IdTrainee == Course_Trainee.ApplicationUser.Id
             && !a.Status).Sum(a => a.Value);
 
-            var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
-                .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
+            //var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
+            //    .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
 
-            decimal Dis = 0;
+            //decimal Dis = 0;
 
-            if (Discount != null)
-            {
-                Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
-            }
+            //if (Discount != null)
+            //{
+            //    Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
+            //}
 
             Course_Trainee.CourseSections.PayLog = Course_Trainee.CourseSections.PayLog.Where(a =>
             a.PayCard.IdTrainee == Course_Trainee.ApplicationUser.Id).ToList();
 
             var FinancialReport = new DTOFinancialReportTreainee()
             {
-                SumPay = SumPay,
-                SumDiscount = Dis,
+                //SumPay = SumPay,
+                //SumDiscount = Dis,
                 Course_Trainee = Course_Trainee,
             };
 
@@ -278,6 +278,7 @@ namespace Ethink.Controllers
             {
                 FileName = "Index.pdf",
                 PageSize = Rotativa.Options.Size.A4,
+                PageHeight = 1000
             };
         }
     }

@@ -26,7 +26,6 @@ namespace Ethink.Models
         }
     
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public virtual DbSet<Assess> Assess { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<Certificates> Certificates { get; set; }
         public virtual DbSet<ContactUs> ContactUs { get; set; }
@@ -42,6 +41,7 @@ namespace Ethink.Models
         public virtual DbSet<PayLog> PayLog { get; set; }
         public virtual DbSet<PaySalary> PaySalary { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
+        public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<RequestRegister> RequestRegister { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Solutions> Solutions { get; set; }
@@ -49,7 +49,5 @@ namespace Ethink.Models
         public virtual DbSet<Testimonial> Testimonial { get; set; }
         public virtual DbSet<TraineeExam> TraineeExam { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
-
-        public System.Data.Entity.DbSet<Ethink.Models.Input_Model.IN_RegisterTrainer> IN_RegisterTrainer { get; set; }
     }
 }

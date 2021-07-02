@@ -162,7 +162,7 @@
                                 <h6 class="mb-0">Number</h6>
                             </div>
                             <div class="col-sm-2">
-                                <h6 class="mb-0">Max Count</h6>
+                                <h6 class="mb-0">Max</h6>
                             </div>
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Trainer</h6>
@@ -175,25 +175,30 @@
                             </div>
                         </div>
                         <hr />
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    @Model.Course_Trainee.CourseSections.Number
-                                </div>
-                                <div class="col-sm-2">
-                                    @Model.Course_Trainee.CourseSections.Course_Trainee.Count()/@Model.Course_Trainee.CourseSections.MaxCount
-                                </div>
-                                <div class="col-sm-3">
-                                    @Model.Course_Trainee.CourseSections.Employee.ApplicationUser.NickName
-                                </div>
-                                <div class="col-sm-3">
-                                    @Model.ApplicationUser.TraineeExam.Where(a => a.Exam.CourseSections.Course_Trainee.FirstOrDefault(t => t.Id == Model.Course_Trainee.Id) != null).Average(a => a.HistorySolutions.Where(h => h.Solutions.IsTrue).Sum(q => q.Questions.Mark))
-                                </div>
-                                <div class="col-sm-2">
-                                    <a href="@Url.Action("FinancialReportTreainee",new { id = Model.Course_Trainee.Id})" class="btn btn-info btn-lg btn-block">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                @Model.Course_Trainee.CourseSections.Number
                             </div>
+                            <div class="col-sm-2">
+                                @Model.Course_Trainee.CourseSections.Course_Trainee.Count()/@Model.Course_Trainee.CourseSections.MaxCount
+                            </div>
+                            <div class="col-sm-3">
+                                @Model.Course_Trainee.CourseSections.Employee.ApplicationUser.NickName
+                            </div>
+                            <div class="col-sm-3">
+                                @if (Model.ApplicationUser.TraineeExam.Any())
+                                {
+                                    @*@Model.ApplicationUser.TraineeExam.Where(a => a.Exam.CourseSections.Course_Trainee.FirstOrDefault(t => t.Id == Model.Course_Trainee.Id) != null).Average(a => a.HistorySolutions.Where(h => h.Solutions.IsTrue).Sum(q => q.Questions.Mark))*@
+                                    @*@Model.ApplicationUser.TraineeExam.Where(a=> a.Exam.CourseSections.Course_Trainee.FirstOrDefault(t => t.Id == Model.Course_Trainee.Id) != null).Average(a=>a.Mark)*@
+                                    @Model.ApplicationUser.TraineeExam.Average(a=>a.Mark)
+                                }
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="@Url.Action("FinancialReportTreainee",new { id = Model.Course_Trainee.Id})" class="btn btn-info btn-lg btn-block">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </div>
+                        </div>
                             <hr />
                     </div>
                 </div>

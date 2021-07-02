@@ -16,16 +16,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Assess">
-      <EntityTypeMapping TypeName="FirstProjectTahalufModel.Assess">
-        <MappingFragment StoreEntitySet="Assess">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="IdTrainee" ColumnName="IdTrainee" />
-          <ScalarProperty Name="IdCourseSections" ColumnName="IdCourseSections" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="FirstProjectTahalufModel.Categories">
         <MappingFragment StoreEntitySet="Categories">
@@ -180,6 +170,16 @@
           <ScalarProperty Name="IdExam" ColumnName="IdExam" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Mark" ColumnName="Mark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rating">
+      <EntityTypeMapping TypeName="FirstProjectTahalufModel.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdTrainee" ColumnName="IdTrainee" />
+          <ScalarProperty Name="IdCourseSections" ColumnName="IdCourseSections" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

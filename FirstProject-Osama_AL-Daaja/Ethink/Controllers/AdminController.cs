@@ -47,6 +47,7 @@ namespace Ethink.Controllers
             if (CourseSection == null) { return RedirectToAction("Index"); }
 
             var Request = CourseSection.RequestRegister.FirstOrDefault(a => a.Id == id);
+
             var CourseTrainee = new Course_Trainee()
             {
                 Date = DateTime.Now,
@@ -75,12 +76,14 @@ namespace Ethink.Controllers
 
         public ActionResult DetailsTrainee(int? id, int? idCourseSection)
         {
-            var Trainee = _context.ApplicationUser.Include(a => a.Certificates).Include(a => a.Course_Trainee).Include(a => a.PayCard).FirstOrDefault(a => a.Id == id);
+            var Trainee = _context.ApplicationUser.Include(a => a.Certificates).Include(a => a.TraineeExam).Include(a => a.PayCard).FirstOrDefault(a => a.Id == id);
 
-            var Course_Trainee = _context.Course_Trainee.FirstOrDefault(a => a.Id == idCourseSection);
+            var Course_Trainee = _context.Course_Trainee.Include(a=>a.CourseSections).FirstOrDefault(a => a.Id == idCourseSection);
             if (Trainee == null || Course_Trainee == null) { return RedirectToAction("Index"); }
 
-            var C = Trainee.Certificates.Last().Name;
+            //.Where(a => a.Exam.CourseSections.Id == idCourseSection)
+            Trainee.TraineeExam = Trainee.TraineeExam.Where(a => a.Exam.CourseSections.Id == Course_Trainee.CourseSections.Id).ToList();
+
             var DTO = new DTODetailsTraineeForAdmin()
             {
                 ApplicationUser = Trainee,
@@ -104,26 +107,26 @@ namespace Ethink.Controllers
             var Course_Trainee = _context.Course_Trainee.FirstOrDefault(a => a.Id == id);
             if (Course_Trainee == null) { return RedirectToAction("Index"); }
 
-            var SumPay = Course_Trainee.CourseSections.PayLog.Where(a => a.PayCard.IdTrainee == Course_Trainee.ApplicationUser.Id
-            && !a.Status).Sum(a => a.Value);
+            //var SumPay = Course_Trainee.CourseSections.PayLog.Where(a => a.PayCard.IdTrainee == Course_Trainee.ApplicationUser.Id
+            //&& !a.Status).Sum(a => a.Value);
 
-            var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
-                .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
+            //var Discount = Course_Trainee.CourseSections.Course.DiscountPrice
+            //    .Where(a => a.StartDate >= Course_Trainee.Date && a.EndDate <= Course_Trainee.Date).OrderBy(a => a.DiscountValue).FirstOrDefault();
 
-            decimal Dis = 0;
+            //decimal Dis = 0;
 
-            if (Discount != null)
-            {
-                Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
-            }
+            //if (Discount != null)
+            //{
+            //    Dis = SumPay * Convert.ToDecimal(Discount.DiscountValue / 100);
+            //}
 
             Course_Trainee.CourseSections.PayLog = Course_Trainee.CourseSections.PayLog.Where(a =>
             a.PayCard.IdTrainee == Course_Trainee.ApplicationUser.Id).ToList();
 
             var FinancialReport = new DTOFinancialReportTreainee()
             {
-                SumPay = SumPay,
-                SumDiscount = Dis,
+                //SumPay = SumPay,
+                //SumDiscount = Dis,
                 Course_Trainee = Course_Trainee,
             };
 

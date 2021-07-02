@@ -5,75 +5,21 @@
     Layout = "~/Views/Shared/_Private_Layout.cshtml";
 }
 
-@*<h2>ListRequestRegister</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseSections.Id)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseSections.Id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>*@
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 <div class="container py-5">
 
-    <!-- For demo purpose -->
     <div class="row text-center text-white mb-5">
         <div class="col-lg-7 mx-auto">
             <h1 class="display-4">Requests</h1>
         </div>
     </div>
-    <!-- End -->
 
     <div class="row">
         <div class="col-lg-8 mx-auto">
 
-            <!-- List group-->
             <ul class="list-group shadow">
 
                 @foreach (var item in Model)
@@ -87,7 +33,22 @@
                             <p class="font-italic text-muted mb-0 small">End Date : @item.CourseSections.Course.EndDate</p>
                             <p class="font-italic text-muted mb-0 small">Number : @item.CourseSections.Number, Max Count : @item.CourseSections.MaxCount</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">@item.CourseSections.Course.Price $</h6>
+                                <h6 class="font-weight-bold my-2">
+                                    @if (@item.CourseSections.Course.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
+                                    {
+                                    <span>
+                                        @item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                        @( Convert.ToDouble(@item.CourseSections.Course.Price) - ((@item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(@item.CourseSections.Course.Price)))
+                                        $
+                                    </span>
+                                    }
+                                    else
+                                    {
+                                <span>
+                                    @item.CourseSections.Course.Price $
+                                </span>
+                                    }
+                                </h6>
                             </div>
                         </div><img src="~/Assets/Courses/@item.CourseSections.Course.Image" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
                     </div>

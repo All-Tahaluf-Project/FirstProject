@@ -17,7 +17,7 @@ namespace Ethink.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ApplicationUser()
         {
-            this.Assess = new HashSet<Assess>();
+            this.Rating = new HashSet<Rating>();
             this.Certificates = new HashSet<Certificates>();
             this.Course_Trainee = new HashSet<Course_Trainee>();
             this.Employee = new HashSet<Employee>();
@@ -38,7 +38,7 @@ namespace Ethink.Models
         public bool Gender { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assess> Assess { get; set; }
+        public virtual ICollection<Rating> Rating { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Certificates> Certificates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

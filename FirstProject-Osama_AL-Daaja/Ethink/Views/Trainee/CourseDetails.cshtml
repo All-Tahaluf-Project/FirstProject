@@ -91,7 +91,19 @@
                                 <h6 class="mb-0">Price</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
+                                @if (Model.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
+                                {
+                                        <span>
+                                            @Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                        @( Convert.ToDouble(Model.Price) - ((Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(Model.Price)))
+                                        $
+                                    </span>
+                                } else
+                                {
+                            <span>
                                 @Model.Price $
+                            </span>
+                                }
                             </div>
                         </div>
                     </div>

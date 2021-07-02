@@ -575,7 +575,7 @@
 
 .centered {
     position: absolute;
-    top: 148%;
+    top: 155%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

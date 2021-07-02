@@ -37,7 +37,24 @@
                             }
                             <div class="mt-3">
                                 <h4>@Model.Course.Name</h4>
-                                <p class="text-secondary mb-1">@Model.Course.Price $</p>
+                                <p class="text-secondary mb-1">
+
+                                    @if (Model.Course.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
+                                    {
+                                        <span>
+                                            @Model.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                            @(Convert.ToDouble(Model.Course.Price) - ((Model.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(Model.Course.Price)))
+                                            $
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                <span>
+                                    @Html.DisplayFor(modelItem => Model.Course.Price) $
+                                </span>
+                                    }
+
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -176,7 +193,15 @@
                                                                     <span class="label label-default">@item.ApplicationUser.NickName</span>
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <span class="label label-default">@item.ApplicationUser.TraineeExam.Where(a=>a.Exam.CourseSections.Course_Trainee.FirstOrDefault(t=>t.Id == item.Id)!= null).Average(a=>a.HistorySolutions.Where(h=>h.Solutions.IsTrue).Sum(q=>q.Questions.Mark))</span>
+                                                                    @if (item.ApplicationUser.TraineeExam.Where(a => a.Exam.CourseSections.Id == item.CourseSections.Id).Any())
+                                                                    {
+                                                                    <span class="label label-default">
+                                                                        @item.ApplicationUser.TraineeExam.Where(a=>a.Exam.CourseSections.Id == item.CourseSections.Id).Average(a=>a.Mark)
+                                                                        @*@item.CourseSections.Exam.Average(a=>a.TraineeExam.Sum(e=>e.Mark)) Of @item.CourseSections.Exam.Sum(a=>a.FullMark)*@
+                                                                    @*@item.ApplicationUser.TraineeExam.Where(a => a.Exam.CourseSections.Course_Trainee
+                                                               .FirstOrDefault(t => t.Id == item.Id) != null).Average(a => a.HistorySolutions.Where(h => h.Solutions.IsTrue).Sum(q => q.Questions.Mark))*@
+                                                                    </span>
+                                                                    }
                                                                 </td>
                                                                 <td style="width: 20%;">
                                                                     <a href="@Url.Action("DetailsTrainee","Admin", new { id = item.ApplicationUser.Id,idCourseSection = item.Id })" class="table-link btn btn-info">

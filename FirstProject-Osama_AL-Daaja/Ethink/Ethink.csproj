@@ -1988,6 +1988,7 @@
     <Compile Include="Controllers\CRUD Admin\CoursesController.cs" />
     <Compile Include="Controllers\CRUD Admin\CourseSectionsController.cs" />
     <Compile Include="Controllers\CRUD Admin\DiscountPricesController.cs" />
+    <Compile Include="Controllers\CRUD Admin\TraineesController.cs" />
     <Compile Include="Controllers\CRUD Admin\TrainersController.cs" />
     <Compile Include="Controllers\CRUD Trainee\PayCardsController.cs" />
     <Compile Include="Controllers\CRUD Trainer\ExamsController.cs" />
@@ -2001,9 +2002,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationUser.cs">
-      <DependentUpon>EThinkDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Assess.cs">
       <DependentUpon>EThinkDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Categories.cs">
@@ -2059,6 +2057,8 @@
     <Compile Include="Models\HistorySolutions.cs">
       <DependentUpon>EThinkDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Input Model\IN_ConfirmEmail.cs" />
+    <Compile Include="Models\Input Model\IN_ConfirmPassword.cs" />
     <Compile Include="Models\Input Model\IN_PaymentLog.cs" />
     <Compile Include="Models\Input Model\IN_AddCredit.cs" />
     <Compile Include="Models\Input Model\IN_CardCodeConfirm .cs" />
@@ -2086,6 +2086,9 @@
       <DependentUpon>EThinkDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Questions.cs">
+      <DependentUpon>EThinkDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rating.cs">
       <DependentUpon>EThinkDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RequestRegister.cs">
@@ -2256,6 +2259,7 @@
     <Content Include="Content\EditForm\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\EditForm\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\EditForm\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="App_Browsers\qt.browser" />
     <EntityDeploy Include="Models\EThinkDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EThinkDB.Designer.cs</LastGenOutput>
@@ -2263,7 +2267,6 @@
     <Content Include="Models\EThinkDB.edmx.diagram">
       <DependentUpon>EThinkDB.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Browsers\qt.browser" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Public_Layout.cshtml" />
@@ -2347,6 +2350,13 @@
     <Content Include="Views\Accountant\EmployeeList.cshtml" />
     <Content Include="Views\Accountant\DetailsEmployee.cshtml" />
     <Content Include="Views\Accountant\AddPaymentSalary.cshtml" />
+    <Content Include="Views\Trainees\Create.cshtml" />
+    <Content Include="Views\Trainees\Delete.cshtml" />
+    <Content Include="Views\Trainees\Details.cshtml" />
+    <Content Include="Views\Trainees\Edit.cshtml" />
+    <Content Include="Views\Trainees\Index.cshtml" />
+    <Content Include="Views\Public\ConfirmEmail.cshtml" />
+    <Content Include="Views\Public\ConfirmPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

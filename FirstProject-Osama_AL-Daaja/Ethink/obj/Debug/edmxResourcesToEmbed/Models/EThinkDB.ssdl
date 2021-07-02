@@ -14,15 +14,6 @@
     <Property Name="NickName" Type="varchar" MaxLength="50" />
     <Property Name="Gender" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="Assess">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IdTrainee" Type="int" Nullable="false" />
-    <Property Name="IdCourseSections" Type="int" Nullable="false" />
-    <Property Name="Value" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Categories">
     <Key>
       <PropertyRef Name="Id" />
@@ -131,7 +122,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Total" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="18" Scale="6" Nullable="false" />
     <Property Name="CardCode" Type="varchar" MaxLength="500" Nullable="false" />
     <Property Name="IdTrainee" Type="int" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
@@ -141,7 +132,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Value" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="6" Nullable="false" />
     <Property Name="IdCard" Type="int" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="IdCourseSection" Type="int" />
@@ -153,7 +144,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IdEmployee" Type="int" Nullable="false" />
-    <Property Name="Value" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="6" />
     <Property Name="Date" Type="date" />
   </EntityType>
   <EntityType Name="Questions">
@@ -164,6 +155,15 @@
     <Property Name="IdExam" Type="int" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="1000" Nullable="false" />
     <Property Name="Mark" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTrainee" Type="int" Nullable="false" />
+    <Property Name="IdCourseSections" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="RequestRegister">
     <Key>
@@ -227,24 +227,24 @@
   </EntityType>
   <Association Name="FK_Assess_ApplicationUser">
     <End Role="ApplicationUser" Type="Self.ApplicationUser" Multiplicity="1" />
-    <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ApplicationUser">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Assess">
+      <Dependent Role="Rating">
         <PropertyRef Name="IdTrainee" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Assess_CourseSections">
     <End Role="CourseSections" Type="Self.CourseSections" Multiplicity="1" />
-    <End Role="Assess" Type="Self.Assess" Multiplicity="*" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CourseSections">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Assess">
+      <Dependent Role="Rating">
         <PropertyRef Name="IdCourseSections" />
       </Dependent>
     </ReferentialConstraint>
@@ -563,7 +563,6 @@
   </Association>
   <EntityContainer Name="FirstProjectTahalufModelStoreContainer">
     <EntitySet Name="ApplicationUser" EntityType="Self.ApplicationUser" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Assess" EntityType="Self.Assess" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Certificates" EntityType="Self.Certificates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
@@ -579,6 +578,7 @@
     <EntitySet Name="PayLog" EntityType="Self.PayLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaySalary" EntityType="Self.PaySalary" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RequestRegister" EntityType="Self.RequestRegister" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Solutions" EntityType="Self.Solutions" Schema="dbo" store:Type="Tables" />
@@ -588,11 +588,11 @@
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Assess_ApplicationUser" Association="Self.FK_Assess_ApplicationUser">
       <End Role="ApplicationUser" EntitySet="ApplicationUser" />
-      <End Role="Assess" EntitySet="Assess" />
+      <End Role="Rating" EntitySet="Rating" />
     </AssociationSet>
     <AssociationSet Name="FK_Assess_CourseSections" Association="Self.FK_Assess_CourseSections">
       <End Role="CourseSections" EntitySet="CourseSections" />
-      <End Role="Assess" EntitySet="Assess" />
+      <End Role="Rating" EntitySet="Rating" />
     </AssociationSet>
     <AssociationSet Name="FK_Certificates_ApplicationUser" Association="Self.FK_Certificates_ApplicationUser">
       <End Role="ApplicationUser" EntitySet="ApplicationUser" />

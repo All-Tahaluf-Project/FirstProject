@@ -76,8 +76,8 @@ namespace Ethink.Controllers.CRUD_Admin
 
         public ActionResult Delete(int? id)
         {
-            Employee employee = _context.Employee.Include(a => a.PaySalary).Include(a => a.CourseSections).FirstOrDefault(a => a.Id == id);
-            var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == employee.IdUser);
+            Employee employee = _context.Employee.Include(a=>a.ApplicationUser.UserRole).Include(a => a.PaySalary).Include(a => a.CourseSections).FirstOrDefault(a => a.Id == id);
+            //var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == employee.IdUser);
 
             if (employee == null)
             {
@@ -86,8 +86,9 @@ namespace Ethink.Controllers.CRUD_Admin
 
             _context.PaySalary.RemoveRange(employee.PaySalary);
             _context.Employee.Remove(employee);
-            _context.ApplicationUser.Remove(ApplicationUser);
-            _context.UserRole.Remove(_context.UserRole.FirstOrDefault(a => a.IdUser == ApplicationUser.Id));
+            _context.ApplicationUser.Remove(employee.ApplicationUser);
+            _context.UserRole.RemoveRange(employee.ApplicationUser.UserRole);
+            _context.UserRole.Remove(_context.UserRole.FirstOrDefault(a => a.IdUser == employee.ApplicationUser.Id));
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -129,8 +130,20 @@ namespace Ethink.Controllers.CRUD_Admin
             var Employee = _context.Employee.FirstOrDefault(a => a.Id == model.Id);
             var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == model.IdUser);
 
-            ApplicationUser.UserName = model.UserName;
-            ApplicationUser.Email = model.Email;
+            if(model.UserName != ApplicationUser.UserName)
+            {
+                var Check = _context.ApplicationUser.FirstOrDefault(a => a.UserName == model.UserName);
+                if (Check != null) { ViewBag.Status = "UserName Is Used"; return View(model); }
+                ApplicationUser.UserName = model.UserName;
+            }
+
+            if (model.Email != ApplicationUser.Email)
+            {
+                var Check = _context.ApplicationUser.FirstOrDefault(a => a.Email == model.Email);
+                if (Check != null) { ViewBag.Status = "Email Is Used"; return View(model); }
+                ApplicationUser.Email = model.Email;
+            }
+
             ApplicationUser.Gender = model.Gender;
             ApplicationUser.NickName = model.NickName;
             ApplicationUser.PhoneNumber = model.PhoneNumber;

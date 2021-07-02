@@ -137,7 +137,19 @@
                             }
                             <div class="mt-3">
                                 <h4>@Model.Course_Trainee.CourseSections.Course.Name</h4>
-                                <p class="text-secondary mb-1">@Model.Course_Trainee.CourseSections.Course.Price $</p>
+                                <p class="text-secondary mb-1">
+                                    @if (Model.Course_Trainee.CourseSections.Course.DiscountPrice.Any(a => a.StartDate < Model.Course_Trainee.Date && a.EndDate > Model.Course_Trainee.Date))
+                                    {
+                                    var Dis = Model.Course_Trainee.CourseSections.Course.DiscountPrice
+                                    .Where(a => a.StartDate < Model.Course_Trainee.Date && a.EndDate > Model.Course_Trainee.Date).OrderBy(a => a.EndDate).Last().DiscountValue;
+                                    var value = Convert.ToDouble(Model.Course_Trainee.CourseSections.Course.Price) - Convert.ToDouble(Model.Course_Trainee.CourseSections.Course.Price) * (Dis / 100);
+                                    <span> @Dis % => @value $</span>
+                                    }
+                                    else
+                                    {
+                                    <span>@Model.Course_Trainee.CourseSections.Course.Price $</span>
+                                    }
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -178,13 +190,31 @@
                                 <h6 class="mb-0">Payment</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                @if(Model.SumDiscount == 0)
-            {
-                <p>@Model.SumPay $ Of @Model.Course_Trainee.CourseSections.Course.Price $</p>
-                                }else
-            {
-                <p>@Model.SumPay $ Of @Model.SumDiscount $</p>
-            }
+                                @if (Model.SumDiscount == 0)
+                                {
+                                <p>
+                                    @Model.Course_Trainee.ApplicationUser.PayCard.Where(a => a.PayLog.Any(p => !p.Status && p.IdCourseSection == Model.Course_Trainee.IdCourseSections)).Sum(a => a.PayLog.Where(p => !p.Status && p.IdCourseSection == Model.Course_Trainee.IdCourseSections).Sum(p => p.Value)) $ Of
+                                    @{
+                                        if (Model.Course_Trainee.CourseSections.Course.DiscountPrice.Any(a => a.StartDate < Model.Course_Trainee.Date && a.EndDate > Model.Course_Trainee.Date))
+                                        {
+                                            var Dis = Model.Course_Trainee.CourseSections.Course.DiscountPrice
+                                                .Where(a => a.StartDate < Model.Course_Trainee.Date && a.EndDate > Model.Course_Trainee.Date).OrderBy(a => a.EndDate).Last().DiscountValue;
+                                            var value = Convert.ToDouble(Model.Course_Trainee.CourseSections.Course.Price) - Convert.ToDouble(Model.Course_Trainee.CourseSections.Course.Price) * (Dis / 100);
+                                            <span> @Dis % => @value $</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@Model.Course_Trainee.CourseSections.Course.Price $</span>
+                                        }
+                                    }
+                                </p>
+                                }
+                                else
+                                {
+                                    <p>
+                                        @Model.Course_Trainee.ApplicationUser.PayCard.Where(a => a.PayLog.Any(p => !p.Status && p.IdCourseSection == Model.Course_Trainee.IdCourseSections)).Sum(a => a.PayLog.Where(p => !p.Status && p.IdCourseSection == Model.Course_Trainee.IdCourseSections).Sum(p => p.Value)) $ 
+                                    </p>
+                                }
                             </div>
                         </div>
                         <hr>

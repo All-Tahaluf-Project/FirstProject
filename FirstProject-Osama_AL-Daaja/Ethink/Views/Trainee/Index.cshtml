@@ -24,8 +24,8 @@
 
 <section id="header" class="jumbotron text-center"
          style="background: url(/Content/Private_Layout/images/pexels-pixabay-256541.jpg) center center / cover no-repeat;">
-    <h1 class="display-3">E Think</h1>
-    <p class="lead">Welcome</p>
+    <h1 class="display-3" style=" color: orange;">E Think</h1>
+    <p class="lead"  style=" color: orange;">Welcome</p>
 </section>
 
 
@@ -114,7 +114,21 @@
                         <button type="submit" class="btn btn-default"><i class="fa fa-sync-alt"></i></button>
                     }
                 </div>
-                <div><span class="activity-done">Courses</span></div>
+                <div>
+                    <span class="activity-done">Courses</span>
+                    <hr />
+                    @*<a href="@Url.Action("Index",new { AllDiscount = "AllDiscount"})" class="btn btn-outline-success">
+                        Get All Courses Discount
+                    </a>*@
+
+                    @using (Html.BeginForm("Index", "Trainee", FormMethod.Get))
+                    {
+                        @Html.Hidden("AllDiscount", true)
+                <button type="submit" class="btn btn-outline-success">
+                    Get All Courses Discount
+                </button>
+                    }
+                </div>
                 <div class="icons">
                     @using (Html.BeginForm("Index", "Trainee", FormMethod.Get))
                     {
@@ -146,13 +160,13 @@
                                         @item.Price $
                                     </div>
                                     <div class="col-md-4">
-                                        @if (item.DiscountPrice.Any() && item.DiscountPrice.OrderBy(a => a.EndDate).First().EndDate > DateTime.Now)
+                                        @if (item.DiscountPrice.Any(a=>a.EndDate >= DateTime.Now))
                                         {
                                             <div class="row" style="color:green">
-                                                @item.DiscountPrice.OrderBy(a => a.EndDate).First().EndDate
+                                                @item.DiscountPrice.OrderBy(a => a.EndDate).Last().EndDate
                                             </div>
                                             <div class="row" style="color:green">
-                                                @item.DiscountPrice.OrderBy(a => a.EndDate).First().DiscountValue %
+                                                @item.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue %
                                             </div>
                                         }
                                         else
