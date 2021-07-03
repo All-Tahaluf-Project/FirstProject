@@ -52,7 +52,7 @@
                 <div class="col-3">
                     <div class="site-logo">
                         <a href="@Url.Action("RedirectToMyPage","Public")" class="font-weight-bold" style="color:#000">
-                            <img style="width: 30px; height: 30px;" src="/Content/Private_Layout/images/graduation-hat.png" /> E Think
+                            <img style="width: 30px; height: 30px;" src="/Content/Private_Layout/images/graduation-hat.png" /> <span style="color: red; font-size: 2.3pc;">E</span> Think
                         </a>
                     </div>
                 </div>
@@ -80,6 +80,8 @@
                                 {
                                     <img style="width: 100px; height: 100px;" src="~/Assets/Users/@Session["ImageName"]" />
                                 }
+                                <hr />
+                                <span style=" font-size: 2pc; color: #101010;">@User.Identity.Name</span>
                             </li>
 
                             <li class="active">

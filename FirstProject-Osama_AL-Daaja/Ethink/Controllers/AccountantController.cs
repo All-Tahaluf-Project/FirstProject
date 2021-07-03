@@ -25,11 +25,6 @@ namespace Ethink.Controllers
                 var D = DateTime.Now.AddDays(-300);
                 var ListOfPay = _context.PayLog.Where(a=> a.Date > D);
 
-                //var CourseSection = _context.CourseSections.OrderBy(a =>
-                //     a.PayLog.Where(p => !p.Status).Sum(s => s.Value)).ToList();
-                ////var Array = CourseSection.ToArray();
-                ////Array.Reverse(Array.);
-
                 var CourseSectionList = _context.CourseSections.Include(a=>a.PayLog);
 
                 var CourseSection = new CourseSections()
@@ -46,7 +41,7 @@ namespace Ethink.Controllers
                 var DTO = new DTOAccountantPage()
                 {
                     CourseSections = CourseSection,
-                    SumPay = ListOfPay.Where(a => a.IdCourseSection != null && !a.Status).Sum(a => a.Value),
+                    SumPay = ListOfPay.Where(a => a.IdCourseSection != null && !a.Status).Any() ? ListOfPay.Where(a => a.IdCourseSection != null && !a.Status).Sum(a => a.Value) : 0,
                     CountOfPay = ListOfPay.Count(),
                     CountOfPayNotProblem = ListOfPay.Where(a => !a.Status).Count(),
                     CountOfPayProblem = ListOfPay.Where(a => a.Status).Count(),
@@ -252,25 +247,25 @@ namespace Ethink.Controllers
             return RedirectToAction("DetailsEmployee", new {id = NewPaySalary.IdEmployee });
         }
 
+        //Excel
+        //public ActionResult ExportEmployeeList()
+        //{
+        //    var DataEmployee = _context.Employee.ToList();
+        //    var stream = new MemoryStream();
 
-        public ActionResult ExportEmployeeList()
-        {
-            var DataEmployee = _context.Employee.ToList();
-            var stream = new MemoryStream();
+        //    using (var package = new ExcelPackage(stream))
+        //    {
+        //        var Sheet = package.Workbook.Worksheets.Add("Pdf");
 
-            using (var package = new ExcelPackage(stream))
-            {
-                var Sheet = package.Workbook.Worksheets.Add("Pdf");
+        //        Sheet.Cells.LoadFromCollection(DataEmployee, true);
 
-                Sheet.Cells.LoadFromCollection(DataEmployee, true);
+        //        package.Save();
+        //    }
 
-                package.Save();
-            }
-
-            stream.Position = 0;
-            var FileName = $"ManagesGlobitelEmployeesEmployeeList{DateTime.Now.ToString("yyyy/MM/dd//HH:mm:ss")}.xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", FileName);
-        }
+        //    stream.Position = 0;
+        //    var FileName = $"ManagesGlobitelEmployeesEmployeeList{DateTime.Now.ToString("yyyy/MM/dd//HH:mm:ss")}.xlsx";
+        //    return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", FileName);
+        //}
 
         public ActionResult PDF()
         {

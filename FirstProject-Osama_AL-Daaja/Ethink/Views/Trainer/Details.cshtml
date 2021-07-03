@@ -308,55 +308,6 @@
 
         </div>
 
-
-        @*<div class="row gutters-sm" id="Trainee" style="display:none">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        @foreach (var item in Model.Course_Trainee)
-                        {
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    @if (item.ApplicationUser.ImageName == "")
-                                    {
-                                        <img src="~/Content/Private_Layout/images/graduation-hat.png" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Assets/Users/@item.ApplicationUser.ImageName" />
-                                    }
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="row">
-                                        <h6>@item.ApplicationUser.Email</h6>
-                                    </div>
-                                    <div class="row">
-                                        <h6>@item.ApplicationUser.PhoneNumber</h6>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <h6>@item.ApplicationUser.NickName</h6>
-                                </div>
-                                <div class="col-sm-3">
-                                    @if (item.ApplicationUser.Gender)
-                                    {
-                                        <img src="~/Content/AdminPage/Image/man.png" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Content/AdminPage/Image/woman.png" />
-                                    }
-                                </div>
-                            </div>
-                            <hr>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
-
-
         <div class="container" id="Trainee" style="display:none">
             <div class="main-body">
                 <div class="row gutters-sm">
@@ -459,7 +410,6 @@
 
             </div>
         </div>
-
 
     </div>
 </div>

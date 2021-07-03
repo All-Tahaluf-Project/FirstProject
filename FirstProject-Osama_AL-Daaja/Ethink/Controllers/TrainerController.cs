@@ -67,7 +67,8 @@ namespace Ethink.Controllers
             if (Start == null || End == null)
             {
                 var MyCourses = _context.CourseSections.Include(a => a.Course.Categories).Include(a => a.Course_Trainee)
-                    .Where(a => a.Employee.ApplicationUser.UserName == User.Identity.Name
+                    .Where(a => 
+                    a.Employee.ApplicationUser.UserName == User.Identity.Name
                     && a.Course.EndDate >= DateTime.Now
                     ).ToList();
 
@@ -75,9 +76,10 @@ namespace Ethink.Controllers
             }else
             {
                 var MyCourses = _context.CourseSections.Include(a => a.Course.Categories).Include(a => a.Course_Trainee)
-                    .Where(a => (a.Course.StartDate <= Start && a.Course.EndDate >= Start)
-                    || (a.Course.StartDate <= End && a.Course.EndDate >= End)
-                    && a.Employee.ApplicationUser.UserName == User.Identity.Name).ToList();
+                    .Where(a => ((a.Course.StartDate <= Start && a.Course.EndDate >= Start)
+                    || (a.Course.StartDate <= End && a.Course.EndDate >= End))
+                    && a.Employee.ApplicationUser.UserName == User.Identity.Name
+                    ).ToList();
 
                 return View(MyCourses);
             }

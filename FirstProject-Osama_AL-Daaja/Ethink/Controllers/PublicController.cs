@@ -314,9 +314,6 @@ namespace Ethink.Controllers
                     ViewBag.Status = "Your Account Is Blocked";
                     return View(model);
                 }
-
-                    Session["UserName"] = ApplicationUser.UserName;
-                    Session["NickName"] = ApplicationUser.NickName;
                     Session["ImageName"] = ApplicationUser.ImageName;
 
                     FormsAuthentication.SetAuthCookie(ApplicationUser.UserName, false);
