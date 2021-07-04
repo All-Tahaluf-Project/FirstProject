@@ -157,10 +157,19 @@ namespace Ethink.Controllers.CRUD_Admin
 
         public ActionResult DeleteTraineeFromCourseSection(int? id)
         {
-            var trainee = db.Course_Trainee.FirstOrDefault(a => a.Id == id);
+            var trainee = db.Course_Trainee.Include(a=>a.ApplicationUser.Certificates)
+                .Include(a => a.ApplicationUser.TraineeExam)
+                .Include(a => a.ApplicationUser.Certificates)
+                .FirstOrDefault(a => a.Id == id);
 
             if(trainee == null) { return RedirectToAction("Index", "Admin"); }
 
+            foreach(var Exam in trainee.ApplicationUser.TraineeExam.Where(a=>a.Exam.IdCourseSections == trainee.IdCourseSections))
+            {
+                db.HistorySolutions.RemoveRange(Exam.HistorySolutions);
+            }
+
+            db.TraineeExam.RemoveRange(trainee.ApplicationUser.TraineeExam);
             db.Course_Trainee.Remove(trainee);
             db.SaveChanges();
             return RedirectToAction("Details",new { id = trainee.IdCourseSections});

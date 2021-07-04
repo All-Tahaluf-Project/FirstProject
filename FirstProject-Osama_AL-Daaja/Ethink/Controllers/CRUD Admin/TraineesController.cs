@@ -30,7 +30,6 @@ namespace Ethink.Controllers.CRUD_Admin
                 return View(db.ApplicationUser.Where(a => a.Email.Contains(Email) && a.UserRole.Any(r => r.IdRole == 2)).ToList());
             }
 
-
             if (Date != null)
             {
                 return View(db.ApplicationUser.Where(a => 
@@ -38,7 +37,7 @@ namespace Ethink.Controllers.CRUD_Admin
                 //&& a.TraineeExam.Where(t=>t.Mark > )
                 //&& a.Course_Trainee.Any(t=>t.CourseSections.Exam.Any(e=> e.TraineeExam.Average(ee=>ee.Mark) >(e.FullMark/2) && e.TraineeExam.Any(te=>te.IdTrainee == a.Id)))
                 //&& a.TraineeExam.Average(t=>t.Mark) >= (a.TraineeExam.FirstOrDefault().Exam.FullMark /2)
-                && db.Exam.Any(e=>e.FullMark/ 2 < e.TraineeExam.Where(t=>t.IdTrainee == a.Id).Sum(t=>t.Mark) && e.CourseSections.Course_Trainee.Any(t=>t.IdTrainee == a.Id))
+                && db.Exam.Any(e => e.CourseSections.Course_Trainee.Any(t => t.IdTrainee == a.Id) && e.FullMark/ 2 < e.TraineeExam.Where(t=>t.IdTrainee == a.Id).Sum(t=>t.Mark))
                 && a.UserRole.Any(r => r.IdRole == 2)).ToList());
             }
 

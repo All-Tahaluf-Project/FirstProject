@@ -167,7 +167,7 @@ namespace Ethink.Controllers
 
             MyMessage.Body = "Code : " + CodeEmail;
 
-            MyMessage.Subject = "Confirm Card Code";
+            MyMessage.Subject = "Confirm Email";
 
             SmtpClient Client = new SmtpClient("smtp.gmail.com", 587);
             Client.Credentials = new System.Net.NetworkCredential()
@@ -260,7 +260,7 @@ namespace Ethink.Controllers
 
             MyMessage.Body = "Code : " + CodeEmail;
 
-            MyMessage.Subject = "Confirm Card Code";
+            MyMessage.Subject = "Confirm Password";
 
             SmtpClient Client = new SmtpClient("smtp.gmail.com", 587);
             Client.Credentials = new System.Net.NetworkCredential()

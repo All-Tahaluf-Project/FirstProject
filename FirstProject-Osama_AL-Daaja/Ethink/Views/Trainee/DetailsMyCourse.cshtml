@@ -292,10 +292,17 @@
                                 }
                                 else
                                 {
-                                    if (item.TraineeExam.FirstOrDefault(a => a.IdTrainee == Model.ApplicationUser.Id) == null)
-                                     {
-                                    <i class="fas fa-times" style="color: red;"></i>
-                                     }
+                                    if (item.StartTime > DateTime.Now)
+                                    {
+                                        <i class="far fa-clock" style="color: green;"></i>
+                                    }
+                                    else
+                                    {
+                                        if (item.TraineeExam.FirstOrDefault(a => a.IdTrainee == Model.ApplicationUser.Id) == null)
+                                        {
+                                        <i class="fas fa-times" style="color: red;"></i>
+                                        }
+                                    }
                                 }
                             }
                         </div>
