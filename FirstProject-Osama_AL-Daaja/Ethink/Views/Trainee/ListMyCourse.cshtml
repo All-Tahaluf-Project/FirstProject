@@ -40,21 +40,25 @@
                                     <p class="font-italic text-muted mb-0 small">@item.CourseSections.Course.Categories.Name</p>
                                     <p class="font-italic text-muted mb-0 small">Start Date : @item.CourseSections.Course.StartDate</p>
                                     <p class="font-italic text-muted mb-0 small">End Date : @item.CourseSections.Course.EndDate</p>
+                                    <p class="font-italic text-muted mb-0 small">Date : @item.Date</p>
                                     <p class="font-italic text-muted mb-0 small">Number : @item.CourseSections.Number, Max Count : @item.CourseSections.MaxCount</p>
                                     <div class="d-flex align-items-center justify-content-between mt-1">
-                                        <h6 class="font-weight-bold my-2">@item.CourseSections.Course.Price $ 
-                                        @if(item.CourseSections.Course.DiscountPrice.Any(a=>a.EndDate > item.Date))
+                                        <h6 class="font-weight-bold my-2">
+                                            @item.CourseSections.Course.Price $
+                                        @if (item.CourseSections.Course.DiscountPrice.Any(a => a.EndDate >= item.Date && item.Date >= a.StartDate))
                                         {
                                             {
                                                 //var value = *((item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue) , Convert.ToDouble(item.CourseSections.Course.Price));
 
-                                            <span>@item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % => 
-                                            @( Convert.ToDouble(item.CourseSections.Course.Price) - ((item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(item.CourseSections.Course.Price)))
-                                            $</span>
-                                            }
+                                                <span>
+                                                    @item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                                @( Convert.ToDouble(item.CourseSections.Course.Price) - ((item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(item.CourseSections.Course.Price)))
+                                                $
+                                            </span>
                                         }
-                                        </h6>
-                                    </div>
+                                    }
+                                    </h6>
+                                </div>
                                 </div><img src="~/Assets/Courses/@item.CourseSections.Course.Image" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
                             </div>
                             <hr />

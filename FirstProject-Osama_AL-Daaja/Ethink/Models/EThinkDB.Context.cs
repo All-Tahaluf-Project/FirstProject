@@ -24,7 +24,6 @@ namespace Ethink.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-    
         public virtual DbSet<ApplicationUser> ApplicationUser { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<Certificates> Certificates { get; set; }

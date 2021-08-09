@@ -18,7 +18,6 @@ namespace Ethink.Controllers
     {
         private Context _context = new Context();
 
-        [AllowAnonymous]
         public ActionResult Home(string StatusContactUS)
         {
             if (User.Identity.IsAuthenticated)
@@ -50,7 +49,7 @@ namespace Ethink.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _context.ApplicationUser.FirstOrDefault(x => (x.UserName == model.UserName || x.Email == model.UserName ));
+                var user = _context.ApplicationUser.FirstOrDefault(x => (x.UserName == model.UserName || x.Email == model.UserName));
                 if (user == null)
                 {
                     ViewBag.Status = "Account Is Not Found.";
@@ -64,8 +63,8 @@ namespace Ethink.Controllers
                     }
                     if (AesOperation.DecryptString(user.Password) == model.Password)
                     {
-                        Session["UserName"] = user.UserName;
-                        Session["NickName"] = user.NickName;
+                        //Session["UserName"] = user.UserName;
+                        //Session["NickName"] = user.NickName;
                         Session["ImageName"] = user.ImageName;
 
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
@@ -80,7 +79,7 @@ namespace Ethink.Controllers
             return View(model);
         }
 
-        public ActionResult RedirectToMyPage(string Status)
+        public ActionResult RedirectToMyPage()
         {
             if (!User.Identity.IsAuthenticated)
             {

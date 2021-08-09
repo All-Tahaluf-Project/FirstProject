@@ -38,7 +38,6 @@ namespace Ethink.Controllers
                     DTO.MaxMark = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Max(a => a.Exam.Max(m => m.TraineeExam.Max(e => e.Mark)));
                     DTO.MinMark = CourseSection.Where(a => a.Course.EndDate > DateTime.Now).Min(a => a.Exam.Min(m => m.TraineeExam.Min(e => e.Mark)));
                 }
-
             }
             else
             {
@@ -103,11 +102,20 @@ namespace Ethink.Controllers
             DTOCourseSection dTOCourseSection = new DTOCourseSection()
             {
                 Course = CourseSection,
-                Course_Trainee = _context.Course_Trainee.Include(a => a.ApplicationUser).Where(a =>a.ApplicationUser.Id != -1 && a.CourseSections.Id == id).ToList(),
-                Exam = _context.Exam.Include(a=>a.Questions).Where(a=>a.CourseSections.Id == CourseSection.Id).ToList(),
+                Course_Trainee = _context.Course_Trainee.Include(a => a.ApplicationUser).Where(a => a.ApplicationUser.Id != -1 && a.CourseSections.Id == id).ToList(),
+                Exam = _context.Exam.Include(a => a.Questions).Where(a => a.CourseSections.Id == CourseSection.Id).ToList(),
                 MaterialsVideo = MaterialsVideo,
                 MaterialsDoc = MaterialsDoc,
             };
+
+            //DTOCourseSection dTOCourseSection = new DTOCourseSection()
+            //{
+            //    Course = CourseSection,
+            //    Course_Trainee = new List<Course_Trainee>(),
+            //    Exam = new List<Exam>(),
+            //    MaterialsVideo = new List<Materials>(),
+            //    MaterialsDoc = new List<Materials>(),
+            //};
 
             return View(dTOCourseSection);
         }

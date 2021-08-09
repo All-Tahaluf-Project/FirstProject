@@ -155,7 +155,8 @@ namespace Ethink.Controllers
                         if (!Directory.Exists(oldpath))
                         {
                             System.IO.File.Delete(oldpath);
-                            _context.Certificates.Remove(ApplicationUser.Certificates.Last());
+                            _context.Certificates.Remove(ApplicationUser.Certificates
+                                .FirstOrDefault(a=>a.IdCourseSections == CourseTrainee.CourseSections.Id));
                         }
                     }
                     string path = Path.Combine(Server.MapPath("~/Assets/Certificates"), File.FileName);

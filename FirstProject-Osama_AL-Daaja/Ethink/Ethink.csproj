@@ -1970,13 +1970,13 @@
       <DependentUpon>EThinkDB.edmx</DependentUpon>
       <LastGenOutput>EThinkDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\Trainer\Image\pexels-energepiccom-313690.jpg" />
+    <Content Include="Content\Trainer\Image\pexels-koshevayak-4170629.jpg" />
+    <Content Include="Content\Trainer\Image\pexels-max-fischer-5212345.jpg" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
-    <Content Include="Content\Trainer\Image\pexels-energepiccom-313690.jpg" />
-    <Content Include="Content\Trainer\Image\pexels-koshevayak-4170629.jpg" />
-    <Content Include="Content\Trainer\Image\pexels-max-fischer-5212345.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

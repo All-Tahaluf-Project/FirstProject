@@ -271,7 +271,7 @@ namespace Ethink.Controllers
         {
             return new ActionAsPdf("Index")
             {
-                FileName = "Index.pdf",
+                FileName = "IndexABC.pdf",
                 PageSize = Rotativa.Options.Size.A4,
                 PageHeight = 1000
             };

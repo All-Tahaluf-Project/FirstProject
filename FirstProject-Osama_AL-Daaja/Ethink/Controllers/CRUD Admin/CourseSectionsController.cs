@@ -100,7 +100,7 @@ namespace Ethink.Controllers.CRUD_Admin
             {
                 return HttpNotFound();
             }
-            var AllEmployee = db.Employee.Select(a => new
+            var AllEmployee = db.Employee.Where(a=>a.ApplicationUser.UserRole.Where(r=>r.IdRole == 3).Any()).Select(a => new
             {
                 Id = a.Id,
                 NickName = a.ApplicationUser.NickName

@@ -104,7 +104,7 @@
                                         @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
                                     <td>
-                                        @if (item.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
+                                        @if (item.DiscountPrice.Any(a => a.StartDate <= DateTime.Now && a.EndDate >= DateTime.Now))
                                         {
                                             //var value = *((item.CourseSections.Course.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue) , Convert.ToDouble(item.CourseSections.Course.Price));
 

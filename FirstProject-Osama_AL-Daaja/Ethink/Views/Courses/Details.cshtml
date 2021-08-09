@@ -74,18 +74,18 @@
                                 <h6 class="mb-0">Price</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                    @if (Model.DiscountPrice.Any(a => a.EndDate > DateTime.Now))
-                                    {
-                                        <span>
-                                            @Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
-                                            @(Convert.ToDouble(Model.Course.Price) - ((Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(Model.Course.Price)))
-                                            $
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        @Html.DisplayFor(modelItem => Model.Course.Price)
-                                    }
+                                @if (Model.DiscountPrice.Any(a => a.StartDate <= DateTime.Now && a.EndDate >= DateTime.Now))
+                                {
+                                    <span>
+                                        @Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue % =>
+                                        @(Convert.ToDouble(Model.Course.Price) - ((Model.DiscountPrice.OrderBy(a => a.EndDate).Last().DiscountValue / 100) * Convert.ToDouble(Model.Course.Price)))
+                                        $
+                                    </span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => Model.Course.Price)
+                                }
                             </div>
                         </div>
                         <hr>

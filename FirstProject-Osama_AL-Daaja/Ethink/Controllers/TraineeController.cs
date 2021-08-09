@@ -298,12 +298,12 @@ a.IdTrainee == _context.ApplicationUser.FirstOrDefault(u => u.UserName == User.I
 
                 var CourseSection = _context.CourseSections.FirstOrDefault(a => a.Id == model.IdCourseSection);
                 decimal Price = 0;
-                if (CourseSection.Course.DiscountPrice.Any(a=>a.StartDate < CourseTrainee.Date && a.EndDate > CourseTrainee.Date))
+                if (CourseSection.Course.DiscountPrice.Any(a=>a.StartDate <= CourseTrainee.Date && a.EndDate >= CourseTrainee.Date))
                 {
                     //Price = Convert.ToDouble(CourseSection.Course.Price);
                     Price = CourseSection.Course.Price;
                     Price = Price -  (Price *(Convert.ToDecimal( CourseSection
-                        .Course.DiscountPrice.Where(a => a.StartDate < CourseTrainee.Date && a.EndDate > CourseTrainee.Date)
+                        .Course.DiscountPrice.Where(a => a.StartDate <= CourseTrainee.Date && a.EndDate >= CourseTrainee.Date)
                         .OrderBy(a => a.EndDate).Last().DiscountValue / 100) ));
                 }else
                 {

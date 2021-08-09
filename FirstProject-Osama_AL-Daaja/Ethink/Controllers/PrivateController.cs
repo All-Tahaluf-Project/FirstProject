@@ -40,7 +40,6 @@ namespace Ethink.Controllers
         [HttpPost]
         public ActionResult EditUserName(DTOApplicationUser model)
         {
-
             if (!_context.ApplicationUser.Any(a => a.UserName == model.UserName))
             {
                 var ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.UserName == User.Identity.Name);
@@ -161,12 +160,13 @@ namespace Ethink.Controllers
 
                 _context.Entry(ApplicationUser).State = EntityState.Modified;
                 _context.SaveChanges();
-            }else
+                return RedirectToAction("RedirectToMyPage", "Public");
+            }
+            else
             {
                 return RedirectToAction("EditMyProfile");
             }
 
-            return RedirectToAction("RedirectToMyPage", "Public");
         }
     }
 }
